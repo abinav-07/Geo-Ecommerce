@@ -14,6 +14,7 @@ const rootReducer=combineReducers({
     user:UserReducer,    
 });
 
+//Persist Store to LocalStorage
 const persistedReducer=persistReducer(persistConfig,rootReducer);
 
 const composeEnhancers =
