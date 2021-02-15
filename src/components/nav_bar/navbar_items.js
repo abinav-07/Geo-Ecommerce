@@ -1,5 +1,5 @@
 import {NAVBAR_TAB_KEYS, PRODUCT_TYPE} from '../../enums'
-const NavbarItems=[
+export const NavbarItems=[
     {
         name:"Products",
         label:"Products",
@@ -73,4 +73,10 @@ const NavbarItems=[
     }
 ]
 
-export default NavbarItems;
+export const UserProfileItems=[
+    {
+        name:"User",
+        label:"User",        
+    }
+]
+
