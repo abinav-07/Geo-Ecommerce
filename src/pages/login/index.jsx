@@ -11,7 +11,7 @@ import { getToken } from '../../utils/storage';
 // import history  from '../../utils/history';
 
 //User Actions
-import { loginUser } from '../../redux';
+import { loginUser, onUserErrorReset } from '../../redux';
 
 const LoginUserPage = () => {
 
@@ -21,6 +21,11 @@ const LoginUserPage = () => {
     const loggingUser = useSelector(state => state.user?.loggingIn);
     const userDetail = useSelector(state => state.user?.user);
     const loggingErrorMsg = useSelector(state => state.user?.loggingError);
+
+    //Reset Errors
+    useEffect(()=>{
+        dispatch(onUserErrorReset());
+    },[]);
 
     //Google Sign Up Response
     const responseGoogle = (response) => {

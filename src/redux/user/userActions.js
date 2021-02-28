@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { API_URL } from '../../config';
-import { push } from 'react-router-redux'
-
 import { setAuthHeaders, removeAuthHeaders } from '../../services/auth';
 import { removeToken } from '../../utils/storage';
 // import history from '../../utils/history';
@@ -17,13 +15,9 @@ import {
     USER_LOGIN_SUCCESS,
     USER_LOGIN_ERROR,
     USER_LOGOUT,
-    USER_LOGOUT_SUCCESS
+    USER_LOGOUT_SUCCESS,
+    USER_ERROR_RESET
 } from './userTypes';
-
-
-
-
-
 
 const onFetchUser = () => {
     return {
@@ -104,6 +98,12 @@ const onUserLogoutSuccess=()=>{
     }
 }
 
+export const onUserErrorReset=()=>{
+    return{
+        type:USER_ERROR_RESET
+    }
+}
+
 export const registerUser = (userData,history) => {
     return (dispatch) => {
         dispatch(onRegisterUser());
@@ -136,8 +136,7 @@ export const loginUser=(userData,history)=>{
         dispatch(onUserLogin());
         axios.post(`${API_URL}/users/login`,userData)
         .then(res=>{                     
-            dispatch(onUserLoginSuccess(res.data.user));
-            console.log(history);
+            dispatch(onUserLoginSuccess(res.data.user));            
             if(rememberMe){
                 localStorage.setItem("user", res.data.token);
             }else{
@@ -157,7 +156,6 @@ export const loginUser=(userData,history)=>{
             }else{
                 dispatch(onUserLoginError(err.response.data));
             }
-            
         })
     }
 }
@@ -165,8 +163,11 @@ export const loginUser=(userData,history)=>{
 export const logoutUser=(history)=>{
     return (dispatch)=>{
         dispatch(onUserLogoutSuccess());
+        
+        //Remove Authentication and Tokens
         removeAuthHeaders();
         removeToken();
+        localStorage.removeItem("persist:root");
         history.push("/");
     }
 }

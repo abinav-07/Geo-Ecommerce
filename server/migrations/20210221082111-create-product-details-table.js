@@ -2,37 +2,24 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("users",{
-      user_id:{
-        type:Sequelize.DataTypes.INTEGER,        
+    return queryInterface.createTable("product_details", {
+      id: {
+        type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      first_name:{
-        type:Sequelize.DataTypes.STRING,
-        allowNull:false
-      },
-      last_name:{
-        type:Sequelize.DataTypes.STRING,
-        allowNull:false
-      },
-      email:{
+      product_detail: {
         type: Sequelize.DataTypes.TEXT("long"),
+        allowNull: false
       },
-      password:{
-        type: Sequelize.DataTypes.TEXT("long"),
-      },
-      google_id:{
-        type: Sequelize.DataTypes.TEXT("long"),
-      },
-      application_rating:{
-        type: Sequelize.DataTypes.STRING,
-      },
-      company_name:{
-        type: Sequelize.DataTypes.TEXT("long"),
-      },
-      total_expenditure:{
+      product_id: {
         type: Sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "products",
+          key: "id"
+        },
+        onDelete: "CASCADE"
       },
       createdAt: {
         type: Sequelize.DataTypes.DATE,

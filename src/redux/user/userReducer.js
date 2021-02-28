@@ -12,7 +12,8 @@ import {
     USER_LOGOUT_SUCCESS,
     FETCH_USER,
     FETCH_USER_SUCCESS,
-    FETCH_USER_ERROR
+    FETCH_USER_ERROR,
+    USER_ERROR_RESET
 } from './userTypes';
 
 const initialState = {
@@ -121,4 +122,19 @@ const userLogoutReducer=(state=initialState,action)=>{
     }
 }
 
-export const reducer = reduceReducers(userRegisterReducer, userLoginReducer, userLogoutReducer);
+const userErrorReset=(state=initialState,action)=>{
+    switch (action.type) {
+        case USER_ERROR_RESET:
+            return{
+                ...state,
+                loggingError: null,
+                registrationError: null
+            }
+            
+    
+        default:
+            return state;
+    }
+}
+
+export const reducer = reduceReducers(userRegisterReducer, userLoginReducer, userLogoutReducer,userErrorReset);

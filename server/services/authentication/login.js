@@ -8,15 +8,17 @@ const Users = require("../../queries/user");
 const loginUser = async (req, res) => {
     const jwtSecretKey = `${process.env.JWT_SECRET_KEY}`;
     let schema;
+
+    //Google Auth or Normal 
     let type = req.body.type;
 
     if (type) {
         //validations
         schema = Joi.object({
-            firstName:Joi.string(),
+            firstName: Joi.string(),
             email: Joi.string().required(),
-            googleId:Joi.string().required(),
-            type:Joi.string().required()            
+            googleId: Joi.string().required(),
+            type: Joi.string().required()
         });
         try {
             const validateResponse = schema.validate(req.body, { abortEarly: false });
@@ -28,7 +30,7 @@ const loginUser = async (req, res) => {
 
                 if (!userResponse || !userResponse.email) res.status(401).send("Email not registered");
 
-                if (userResponse && (userResponse.google_id && userResponse.google_id!=req.body.googleId)) res.status(401).send("Google Id Error");
+                if (userResponse && (userResponse.google_id && userResponse.google_id != req.body.googleId)) res.status(401).send("Google Id Error");
 
                 if (userResponse && userResponse.email) {
                     const payload = {

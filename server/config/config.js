@@ -7,6 +7,7 @@ module.exports={
     "database": process.env.MY_SQL_DB_NAME,
     "host": process.env.MY_SQL_HOST,
     "dialect": "mysql",
+    // "logging":false,
     "dialectOptions": {
       bigNumberStrings: true
     }

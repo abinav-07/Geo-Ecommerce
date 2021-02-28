@@ -20,7 +20,8 @@ app.use((req, res, next) => {
 });
 
 
-app.use("/users/", require("./routes/authentication_routes/index"))
+
+app.use("/", require("./routes/index"));
 
 app.listen(5000, () => {
     console.log("Listening");

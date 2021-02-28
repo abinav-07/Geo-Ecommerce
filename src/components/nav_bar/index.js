@@ -68,9 +68,7 @@ const Navbar = ({ displaySearchBar }) => {
         )
     }
 
-
-
-
+    //Return Main Component
     return (
         <NavBarDiv id="navBarDiv">
             <Row gutter={24}>
@@ -151,7 +149,10 @@ const Navbar = ({ displaySearchBar }) => {
                                             <MenuItem
                                                 key={name}
                                             >
-                                                <h3>{label}</h3>
+                                                <Link to={path}>
+                                                    <h3>{label}</h3>
+                                                </Link>
+
                                             </MenuItem>
                                         )
 
@@ -210,7 +211,7 @@ const Navbar = ({ displaySearchBar }) => {
                                     </div>
                                     <div>
                                         Sign Up/Register
-                            </div>
+                                    </div>
                                 </Link>
 
                             </div>

@@ -10,13 +10,18 @@ import logo from '../../assests/images/logo.png';
 import { getToken } from '../../utils/storage';
 
 //Actions
-import { registerUser } from '../../redux';
+import { registerUser,onUserErrorReset } from '../../redux';
 
 const RegisterUserPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const registeringUser = useSelector(state => state.user?.registeringUser);
     const registerErrorMsg = useSelector(state => state.user?.registrationError);
+
+    //Reset Errors
+    useEffect(()=>{
+        dispatch(onUserErrorReset());
+    },[]);
 
     //Google Sign Up Response
     const responseGoogle = (response) => {        

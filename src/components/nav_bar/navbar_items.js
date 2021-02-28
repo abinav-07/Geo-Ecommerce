@@ -1,4 +1,4 @@
-import {NAVBAR_TAB_KEYS, PRODUCT_TYPE} from '../../enums'
+import {NAVBAR_TAB_KEYS, PRODUCT_TYPE, SELL_YOUR_PRODUCTS} from '../../enums'
 export const NavbarItems=[
     {
         name:"Products",
@@ -64,7 +64,7 @@ export const NavbarItems=[
     {
         name:"Sell Your Products",
         label:"Sell Your Products",
-        path:"/products/sell_your_products"
+        path:SELL_YOUR_PRODUCTS
     },
     {
         name:"Contact",

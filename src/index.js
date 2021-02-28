@@ -7,8 +7,11 @@ import { Provider } from 'react-redux';
 import configureStore from './redux/store';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react'
+import { setAuthHeaders } from './services/auth';
 
 const { store, persistor } = configureStore();
+
+setAuthHeaders();
 
 ReactDOM.render(
   // <React.StrictMode>

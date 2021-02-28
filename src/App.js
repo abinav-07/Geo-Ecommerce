@@ -1,8 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { message } from 'antd';
 import Routes from './routes';
 import { getToken } from './utils/storage';
+import { getAllSellerProducts } from './redux';
 
 function App() {
   // const UserRoutes = () => {
@@ -13,6 +17,17 @@ function App() {
   //     </div>
   //   );
   // };
+
+  const dispatch = useDispatch();
+
+  const userId = useSelector(state => state.user.user?.user_id);
+  const addingSellerProductsSuccess = useSelector(state => state.addSellerProducts?.addingSellerProductsSuccess);  
+  
+  //Get Seller All Product Details
+  useEffect(() => {    
+    dispatch(getAllSellerProducts(userId));
+  }, [userId, addingSellerProductsSuccess]);
+
   return (
     <Switch>
       {/* <Route path="/users/login" exact component={LoginPage}>
@@ -46,6 +61,9 @@ function App() {
               exact={exact}
               render={(props) => {
                 if (!getToken()) {
+                  message.info({
+                    content: "You must login to view this page!",
+                  });
                   return <Redirect to="/"></Redirect>
                 } else {
                   return (
@@ -65,7 +83,7 @@ function App() {
               path={path}
               exact={exact}
               render={(props) => {
-                console.log(props);
+                // console.log(props);
                 return (
                   <Layout displaySearchBar={displaySearchBar} {...props}>
                     <Component {...props}></Component>

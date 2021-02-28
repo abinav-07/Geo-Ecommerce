@@ -2,37 +2,43 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("users",{
-      user_id:{
-        type:Sequelize.DataTypes.INTEGER,        
+    return queryInterface.createTable("products", {
+      id: {
+        type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      first_name:{
-        type:Sequelize.DataTypes.STRING,
-        allowNull:false
+      product_name: {
+        type: Sequelize.DataTypes.TEXT,
+        allowNull: false
       },
-      last_name:{
-        type:Sequelize.DataTypes.STRING,
-        allowNull:false
+      is_used_product: {
+        type: Sequelize.DataTypes.BOOLEAN,
+        allowNull: false
       },
-      email:{
-        type: Sequelize.DataTypes.TEXT("long"),
-      },
-      password:{
-        type: Sequelize.DataTypes.TEXT("long"),
-      },
-      google_id:{
-        type: Sequelize.DataTypes.TEXT("long"),
-      },
-      application_rating:{
+      product_type: {
         type: Sequelize.DataTypes.STRING,
+        allowNull: false
       },
-      company_name:{
-        type: Sequelize.DataTypes.TEXT("long"),
-      },
-      total_expenditure:{
+      product_price: {
         type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+      },
+      product_quantity: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+      },
+      product_sub_type: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
+      },
+      seller_id: {
+        type:Sequelize.DataTypes.INTEGER,        
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "user_id"
+        }
       },
       createdAt: {
         type: Sequelize.DataTypes.DATE,
