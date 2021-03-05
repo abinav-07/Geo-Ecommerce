@@ -68,16 +68,16 @@ const getSellerProducts = async (user_id) => {
         where: {
             seller_id: user_id
         },
-        order:[["id","DESC"]],
-        attributes: [["id","product_id"], "product_name", "is_used_product", "product_type","product_sub_type","product_price","product_quantity"],
+        order: [["id", "DESC"]],
+        attributes: [["id", "product_id"], "product_name", "is_used_product", "product_type", "product_sub_type", "product_price", "product_quantity"],
         include: [{
             model: ProductImages,
             as: "product_images",
-            attributes:[["id","image_id"],"image","product_id"]            
+            attributes: [["id", "image_id"], "image", "product_id"]
         }, {
             model: ProductDetails,
             as: "product_details",
-            attributes:[["id","product_detail_id"],"product_detail","product_id"],                 
+            attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
         }]
     });
     const payload = {
@@ -87,27 +87,58 @@ const getSellerProducts = async (user_id) => {
     return payload;
 }
 
-const deleteSellerProduct=async(values)=>{
-    const response=await Products.destroy({
-        where:{
-            [Op.and]:[
-                {id:values.product_id},
-                {seller_id:values.user_id}
-            ]            
-        }
-    });      
-    return response;
-}
-
-const updateSellerProduct=async(values)=>{    
-    const response=await Products.update({product_quantity:values.product_quantity},{
-        where:{
-            [Op.and]:[
-                {id:values.product_id},
-                {seller_id:values.user_id}
+const deleteSellerProduct = async (values) => {
+    const response = await Products.destroy({
+        where: {
+            [Op.and]: [
+                { id: values.product_id },
+                { seller_id: values.user_id }
             ]
         }
     });
+    return response;
+}
+
+const updateSellerProduct = async (values) => {
+    const response = await Products.update({ product_quantity: values.product_quantity }, {
+        where: {
+            [Op.and]: [
+                { id: values.product_id },
+                { seller_id: values.user_id }
+            ]
+        }
+    });
+    return response;
+}
+
+const getAllProducts = async (user_id) => {
+    const response = await Products.findAll({
+        where: {
+            [Op.and]: [
+                {
+                    seller_id: {
+                        [Op.ne]: user_id
+                    }
+                },
+                {
+                    product_quantity: {
+                        [Op.gt]: 0
+                    }
+                }
+            ]
+        },
+        attributes: [["id", "product_id"], "product_name", "is_used_product", "product_type", "product_price", "product_quantity", "product_sub_type", "seller_id"],
+        include: [{
+            model: ProductImages,
+            as: "product_images",
+            attributes: [["id", "image_id"], "image", "product_id"]
+        }, {
+            model: ProductDetails,
+            as: "product_details",
+            attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
+        }]
+    });
+
     return response;
 }
 
@@ -117,5 +148,6 @@ module.exports = {
     addSellerProductsDetails,
     getSellerProducts,
     deleteSellerProduct,
-    updateSellerProduct
+    updateSellerProduct,
+    getAllProducts
 }

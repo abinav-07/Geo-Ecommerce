@@ -9,38 +9,29 @@ import { getToken } from './utils/storage';
 import { getAllSellerProducts } from './redux';
 
 function App() {
-  // const UserRoutes = () => {
-  //   return (
-  //     <div>
-  //       <Navbar />
-  //       <LandingPage />
-  //     </div>
-  //   );
-  // };
 
   const dispatch = useDispatch();
 
   const userId = useSelector(state => state.user.user?.user_id);
-  const addingSellerProductsSuccess = useSelector(state => state.addSellerProducts?.addingSellerProductsSuccess);  
-  
+  const addingSellerProductsSuccess = useSelector(state => state.addSellerProducts?.addingSellerProductsSuccess);
+
   //Get Seller All Product Details
-  useEffect(() => {    
+  useEffect(() => {
     dispatch(getAllSellerProducts(userId));
   }, [userId, addingSellerProductsSuccess]);
 
+  const PrivateRouter = () => {
+    useEffect(() => {
+      message.info({
+        content: "You must login to view this page!",
+      });
+    });
+
+    return <Redirect to="/"></Redirect>
+  }
+
   return (
     <Switch>
-      {/* <Route path="/users/login" exact component={LoginPage}>
-      </Route>
-      <Route path="/users/register" exact component={RegisterUser}>
-      </Route>
-      <Route path="/" exact component={UserRoutes}></Route>
-      <Route path="*" render={() => {
-        return (
-          <h2>Page Not Found</h2>
-        )
-      }}>
-      </Route> */}
       {Routes.map((
         {
           name,
@@ -61,13 +52,10 @@ function App() {
               exact={exact}
               render={(props) => {
                 if (!getToken()) {
-                  message.info({
-                    content: "You must login to view this page!",
-                  });
-                  return <Redirect to="/"></Redirect>
+                  return <PrivateRouter />
                 } else {
                   return (
-                    <Layout {...props}>
+                    <Layout displaySearchBar={displaySearchBar} {...props}>
                       <Component {...props}></Component>
                     </Layout>
                   )
@@ -83,7 +71,6 @@ function App() {
               path={path}
               exact={exact}
               render={(props) => {
-                // console.log(props);
                 return (
                   <Layout displaySearchBar={displaySearchBar} {...props}>
                     <Component {...props}></Component>

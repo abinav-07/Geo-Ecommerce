@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import SearchBar from './search_bar';
 import { NavBarDiv, NavBarMenu, MenuItem, DropDownMenuDiv, UserDropDownMenuDiv, LogoutButton } from './style';
-import { Row, Col, Dropdown, Divider, Image } from 'antd';
+import { Row, Col, Dropdown, Divider, Image, Input } from 'antd';
 import { DownOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons'
 import { NavbarItems, UserProfileItems } from './navbar_items';
 import { getToken } from '../../utils/storage';
@@ -13,6 +13,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import logo from '../../assests/images/logo.png';
 
 const Navbar = ({ displaySearchBar }) => {
+    console.log(displaySearchBar);
     const history = useHistory();
     const dispatch = useDispatch();
     const User = useSelector(state => state.user?.user);
@@ -27,13 +28,16 @@ const Navbar = ({ displaySearchBar }) => {
             <DropDownMenuDiv>
                 {
                     (props.subMenu && props.subMenu.length > 0)
-                        ? props.subMenu.map(({ name, label, path }) => {
+                        ? props.subMenu.map(({ name, label, path }, i) => {
                             return (
                                 <NavBarMenu>
                                     <MenuItem
-                                        key={name}
+                                        key={i}
                                     >
-                                        {label}
+                                        <Link to={path}>
+                                            {label}
+                                        </Link>
+
                                     </MenuItem>
                                 </NavBarMenu>
                             )
@@ -73,45 +77,48 @@ const Navbar = ({ displaySearchBar }) => {
         <NavBarDiv id="navBarDiv">
             <Row gutter={24}>
                 <Col
-                    md={{ span: 3, offset: 1 }}
-                    xl={{ span: 3, offset: 1 }}
+                    md={{ span: 5, offset: 0 }}
+                    xl={{ span: 5, offset: 0 }}
+                    style={{ display: "flex", alignItems: "baseline", flexDirection: "row", justifyContent: "space-between", zIndex: "999", textAlign: "center" }}
                 >
-
+                    <div style={{ padding: "1rem" }}>
+                        <Link to="/">
+                            <Image src={logo}
+                                width="50%"
+                                alt="Logo.png"
+                                onClick={() => {
+                                    <Redirect to="/"></Redirect>
+                                }}
+                                preview={false}
+                            />
+                        </Link>
+                    </div>
                     {/* Conditional Search Bar Rendering */}
 
                     {displaySearchBar ?
                         (
                             <div style={{ padding: "1rem" }}>
-
-                                <div>
-                                    <SearchBar></SearchBar>
+                                <div id="searchIconDiv">
+                                    <div>
+                                        <SearchBar></SearchBar>
+                                    </div>
+                                    <div>
+                                        Search
+                                </div>
                                 </div>
                                 <div>
-                                    Search
-                        </div>
+                                    <Input id="searchInput" placeholder="Search"/>
+                                </div>
 
                             </div>
                         )
                         :
                         (
-                            <div style={{ padding: "1rem" }}>
-                                <Link to="/">
-                                    <Image src={logo}
-                                        width="80%"
-                                        alt="Logo.png"
-                                        onClick={() => {
-                                            <Redirect to="/"></Redirect>
-                                        }}
-                                        preview={false}
-                                    />
-                                </Link>
-                            </div>
-
+                            ""
                         )
                     }
-
-
                 </Col>
+
                 <Col
                     md={{ span: 8 }}
                     xl={{ span: 14 }}
@@ -138,7 +145,6 @@ const Navbar = ({ displaySearchBar }) => {
 
                                                 <a className="nav-bar-anchor">
                                                     <div>{label}<DownOutlined /></div>
-
                                                 </a>
 
 
@@ -164,7 +170,7 @@ const Navbar = ({ displaySearchBar }) => {
                 </Col>
                 <Col
                     md={{ span: 8 }}
-                    xl={{ span: 4, offset: 1 }}
+                    xl={{ span: 4, offset: 0 }}
                     style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", zIndex: "999", padding: "1rem", textAlign: "center" }}
                 >
                     <div>

@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { reducer as UserReducer }  from './user/userReducer';
 import {reducer as AddSellerProductsReducer, sellerAllProductsReducer as SellerAllProductsReducer} from './seller_products/sellerProductsReducer';
+import {reducer as AllProductsReducer} from './products/productsReducer';
 import thunk from 'redux-thunk';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
@@ -19,7 +20,8 @@ const persistConfig = {
 const rootReducer=combineReducers({
     user:UserReducer,  
     addSellerProducts:AddSellerProductsReducer,
-    sellerAllProducts:SellerAllProductsReducer
+    sellerAllProducts:SellerAllProductsReducer,
+    allProducts:AllProductsReducer,
 });
 
 //Persist Store to LocalStorage

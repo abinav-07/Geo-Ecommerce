@@ -4,6 +4,7 @@ import LoginUserPage from './pages/login';
 import RegisterUserPage from './pages/register';
 import LandingPage from './pages/landing';
 import SellYourProductsPage from './pages/sell_your_products';
+import ProductsPage from './pages/products_views';
 
 //Route Enums
 import { SELL_YOUR_PRODUCTS } from './enums';
@@ -43,11 +44,20 @@ const Routes = [
         path: SELL_YOUR_PRODUCTS,
         privateRoute: true,
         exact: true,
-        displaySearchBar: true,
+        displaySearchBar: false,
         layout: ConditionalLayout,
         component: SellYourProductsPage,
 
-    }
+    },
+    {
+        name: "Products",
+        path: "/products/:product_type",
+        privateRoute: true,
+        exact: true,
+        displaySearchBar: true,
+        layout: ConditionalLayout,
+        component: ProductsPage
+    },
 ]
 
 export default Routes;

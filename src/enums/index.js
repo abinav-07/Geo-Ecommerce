@@ -1,236 +1,250 @@
-export const NAVBAR_TAB_KEYS={
-    ALL_PRODUCTS:"all-products",
-    ELECTRICAL_PRODUCTS:"electrical-products",
-    TOY_PRODUCTS:"toy-products",
-    CLOTHES_PRODUCTS:"clothes-products",
-    AUTOMOBILE_PRODUCTS:"automobile-products",
-    GROCERIES_PRODUCTS:"groceries-products",
-    PETS_PRODUCTS:"pets-products",
-    SPORTS_PRODUCTS:"sports-products",
-    ACCESSORIES_PRODUCTS:"accessories"    
+export const NAVBAR_TAB_KEYS = {
+    ALL_PRODUCTS: "all-products",
+    ELECTRICAL_PRODUCTS: "electrical-products",
+    TOY_PRODUCTS: "toy-products",
+    CLOTHES_PRODUCTS: "clothes-products",
+    AUTOMOBILE_PRODUCTS: "automobile-products",
+    GROCERIES_PRODUCTS: "groceries-products",
+    PETS_PRODUCTS: "pets-products",
+    SPORTS_PRODUCTS: "sports-products",
+    ACCESSORIES_PRODUCTS: "accessories",
+    NEW_PRODUCTS: "new-products",
+    OLD_PRODUCTS: "old-products"
     /** CAUTION:
      *      Dont Forget To Add Same Values to SELL_YOUR_PRODUCTS_PRODUCT_TYPES CONST
     **/
 }
 
 
-export const PRODUCT_TYPE={
-    NEW_PRODUCTS:"new-products",
-    OLD_PRODUCTS:"old-products"
+
+
+export const PRODUCT_TYPES = {
+    // Same As Value From SELL_YOUR_PRODUCTS_PRODUCT_TYPES Const
+    ALL_PRODUCTS:"allProducts",
+    TOYS: "toys",
+    ELECTRICAL: "electronic",
+    CLOTHES: "clothes",
+    AUTOMOBILE: "autoMobile",
+    GROCERIES: "groceries",
+    PETS: "pets",
+    SPORTS: "sports",
+    ACCESSORIES: "accessories",
+    NEW_PRODUCTS:"newProducts",
+    OLD_PRODUCTS:"oldProducts"
 }
 
-export const SELL_YOUR_PRODUCTS="/users/sell-your-products";
+export const SELL_YOUR_PRODUCTS = "/users/sell-your-products";
 
-export const SELL_YOUR_PRODUCTS_PRODUCT_TYPES=[
+export const SELL_YOUR_PRODUCTS_PRODUCT_TYPES = [
     {
-        name:"Toys",
-        value:"toys",
-        subGroup:[
+        name: "Toys",
+        value: "toys",
+        subGroup: [
             {
-                name:"Toddler Toys",
-                value:"toddlerToys"
+                name: "Toddler Toys",
+                value: "toddlerToys"
             },
             {
-                name:"Toys",
-                value:"toys"                
+                name: "Toys",
+                value: "toys"
             }
         ]
     },
     {
-        name:"Electronic",
-        value:"electronic",
-        subGroup:[
+        name: "Electronic",
+        value: "electronic",
+        subGroup: [
             {
-                name:"Mobiles",
-                value:"mobiles",
+                name: "Mobiles",
+                value: "mobiles",
             },
             {
-                name:"Tablets",
-                value:"tablets", 
+                name: "Tablets",
+                value: "tablets",
             },
             {
-                name:"Laptops",
-                value:"laptops", 
+                name: "Laptops",
+                value: "laptops",
             },
             {
-                name:"Desktops",
-                value:"desktops", 
+                name: "Desktops",
+                value: "desktops",
             },
             {
-                name:"Cameras",
-                value:"cameras", 
+                name: "Cameras",
+                value: "cameras",
             },
             {
-                name:"Gaming",
-                value:"gaming", 
+                name: "Gaming",
+                value: "gaming",
             },
             {
-                name:"Printers",
-                value:"printers", 
+                name: "Printers",
+                value: "printers",
             },
             {
-                name:"Televisions",
-                value:"televisions", 
-            },
-        ]
-    },
-    {
-        name:"Clothes",
-        value:"clothes",
-        subGroup:[
-            {
-                name:"Jeans",
-                value:"jeans"
-            },
-            {
-                name:"Shorts",
-                value:"shorts",
-            },
-            {
-                name:"Shoes",
-                value:"shoes",
-            },
-            {
-                name:"Party Wear",
-                value:"partyWear",
-            },            
-            {
-                name:"Clothing",
-                value:"clothing",
-            },
-            {
-                name:"Lingerie",
-                value:"lingerie",
-            },
-            {
-                name:"Jackets",
-                value:"jackets",
+                name: "Televisions",
+                value: "televisions",
             },
         ]
     },
     {
-        name:"Auto-mobile",
-        value:"autoMobile",
-        subGroup:[
+        name: "Clothes",
+        value: "clothes",
+        subGroup: [
             {
-                name:"Motorcycles",
-                value:"motorcycles"                
+                name: "Jeans",
+                value: "jeans"
             },
             {
-                name:"Helmets",
-                value:"helmets"
+                name: "Shorts",
+                value: "shorts",
             },
             {
-                name:"Gloves",
-                value:"gloves"
+                name: "Shoes",
+                value: "shoes",
             },
             {
-                name:"Auto Parts",
-                value:"autoParts"
+                name: "Party Wear",
+                value: "partyWear",
             },
             {
-                name:"Auto Tools",
-                value:"autoTools"
+                name: "Clothing",
+                value: "clothing",
             },
             {
-                name:"Lubricants",
-                value:"lubricants"
+                name: "Lingerie",
+                value: "lingerie",
+            },
+            {
+                name: "Jackets",
+                value: "jackets",
+            },
+        ]
+    },
+    {
+        name: "Auto-mobile",
+        value: "autoMobile",
+        subGroup: [
+            {
+                name: "Motorcycles",
+                value: "motorcycles"
+            },
+            {
+                name: "Helmets",
+                value: "helmets"
+            },
+            {
+                name: "Gloves",
+                value: "gloves"
+            },
+            {
+                name: "Auto Parts",
+                value: "autoParts"
+            },
+            {
+                name: "Auto Tools",
+                value: "autoTools"
+            },
+            {
+                name: "Lubricants",
+                value: "lubricants"
             },
         ]
 
     },
     {
-        name:"Groceries",
-        value:"groceries",
-        subGroup:[
+        name: "Groceries",
+        value: "groceries",
+        subGroup: [
             {
-                name:"Food",
-                value:"food"            
+                name: "Food",
+                value: "food"
             },
             {
-                name:"Beverages",
-                value:"beverages"            
+                name: "Beverages",
+                value: "beverages"
             },
             {
-                name:"Breakfast & Snacks",
-                value:"snacks"
+                name: "Breakfast & Snacks",
+                value: "snacks"
             },
             {
-                name:"Cooking Ingredients",
-                value:"cookingIngredients"
+                name: "Cooking Ingredients",
+                value: "cookingIngredients"
             },
             {
-                name:"Laundry",
-                value:"laundry"
-            },
-        ]
-    },
-    {
-        name:"Pets",
-        value:"pets",
-        subGroup:[
-            {
-                name:"Dogs",
-                value:"dogs"                
-            },
-            {
-                name:"Cats",
-                value:"cats"
-            },
-            {
-                name:"Pet Food",
-                value:"petFood"
+                name: "Laundry",
+                value: "laundry"
             },
         ]
     },
     {
-        name:"Sports",
-        value:"sports",
-        subGroup:[
+        name: "Pets",
+        value: "pets",
+        subGroup: [
             {
-                name:"Football",
-                value:"football"
+                name: "Dogs",
+                value: "dogs"
             },
             {
-                name:"Basketball",
-                value:"basketball"
+                name: "Cats",
+                value: "cats"
             },
             {
-                name:"Cricket",
-                value:"cricket"
+                name: "Pet Food",
+                value: "petFood"
+            },
+        ]
+    },
+    {
+        name: "Sports",
+        value: "sports",
+        subGroup: [
+            {
+                name: "Football",
+                value: "football"
             },
             {
-                name:"Table Tennis",
-                value:"tableTennis"
+                name: "Basketball",
+                value: "basketball"
             },
             {
-                name:"Badminton",
-                value:"badminton"
+                name: "Cricket",
+                value: "cricket"
             },
             {
-                name:"Nutrition",
-                value:"nutrition"
+                name: "Table Tennis",
+                value: "tableTennis"
+            },
+            {
+                name: "Badminton",
+                value: "badminton"
+            },
+            {
+                name: "Nutrition",
+                value: "nutrition"
             }
         ]
     },
     {
-        name:"Accessories",
-        value:"accessories",
-        subGroup:[
+        name: "Accessories",
+        value: "accessories",
+        subGroup: [
             {
-                name:"Watch",
-                value:"watch"
+                name: "Watch",
+                value: "watch"
             },
             {
-                name:"Sun Glasses",
-                value:"sunGlasses"
+                name: "Sun Glasses",
+                value: "sunGlasses"
             },
             {
-                name:"Jewellery",
-                value:"jewellery"
+                name: "Jewellery",
+                value: "jewellery"
             },
         ]
-    },    
+    },
 ]
 
 

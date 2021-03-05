@@ -11,6 +11,9 @@ export const NavBarDiv=styled.div`
     perspective:1000px;
     margin:0 auto;
  
+    #searchInput{
+        display:none;
+    }
 `
 
 export const NavBarMenu=styled(Menu)`
