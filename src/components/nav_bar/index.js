@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import SearchBar from './search_bar';
+import RatingComponent from './rating_component';
 import { NavBarDiv, NavBarMenu, MenuItem, DropDownMenuDiv, UserDropDownMenuDiv, LogoutButton } from './style';
 import { Row, Col, Dropdown, Divider, Image, Input } from 'antd';
 import { DownOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons'
@@ -13,7 +14,6 @@ import 'font-awesome/css/font-awesome.min.css';
 import logo from '../../assests/images/logo.png';
 
 const Navbar = ({ displaySearchBar }) => {
-    console.log(displaySearchBar);
     const history = useHistory();
     const dispatch = useDispatch();
     const User = useSelector(state => state.user?.user);
@@ -107,7 +107,7 @@ const Navbar = ({ displaySearchBar }) => {
                                 </div>
                                 </div>
                                 <div>
-                                    <Input id="searchInput" placeholder="Search"/>
+                                    <Input id="searchInput" placeholder="Search" />
                                 </div>
 
                             </div>
@@ -136,7 +136,7 @@ const Navbar = ({ displaySearchBar }) => {
                             <NavBarMenu
                                 mode="horizontal"
                             >
-                                {NavbarItems.map(({ name, label, subMenu, path }) =>
+                                {NavbarItems.map(({ name, label, subMenu, path }, i) =>
                                     subMenu ?
                                         (
                                             <Dropdown
@@ -153,7 +153,7 @@ const Navbar = ({ displaySearchBar }) => {
                                         :
                                         (
                                             <MenuItem
-                                                key={name}
+                                                key={i}
                                             >
                                                 <Link to={path}>
                                                     <h3>{label}</h3>
@@ -173,14 +173,7 @@ const Navbar = ({ displaySearchBar }) => {
                     xl={{ span: 4, offset: 0 }}
                     style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", zIndex: "999", padding: "1rem", textAlign: "center" }}
                 >
-                    <div>
-                        <div>
-                            <SmileOutlined style={{ fontSize: "2.5rem" }} />
-                        </div>
-                        <div>
-                            Rating
-                        </div>
-                    </div>
+                    <RatingComponent />
                     {getToken() ?
                         (
                             UserProfileItems.map(({ name, label }) => {
@@ -222,14 +215,9 @@ const Navbar = ({ displaySearchBar }) => {
 
                             </div>
                         )
-
                     }
-
-
                 </Col>
             </Row>
-
-
         </NavBarDiv>
     )
 }

@@ -1,24 +1,33 @@
-import React, { useEffect, useRef } from 'react';
-import { Row, Col, Layout } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { Row, Col, Layout, Image } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { WelcomeDiv, PCBackgroundImg, RightBackGround, LandingRightColumn } from './style';
 import pcBackgroundImg from '../../assests/images/pcBackgroundImg.jpg';
+import logo from '../../assests/images/logo.png';
 import $ from 'jquery';
 import { DownCircleFilled } from '@ant-design/icons';
+import ReactRotatingText from 'react-rotating-text';
 
 import HowSamanWorksDiv from './components/how_saman_works_info';
 import BuySellInformation from './components/buy_sell_info';
 
 const LandingPage = () => {
 
+    const [animationColor, setAnimationColor] = useState("yellow");
+
     //Animation Div Ref
     const landingRightColumnElement = useRef(null);
     const totalDegreesToRotateLandingRightDiv = 20;
     const totalDegreesToRotateLandingBuySellDiv = 40;
 
+    const animationColors = ["#dec852", "#587abf", "#36a87b", "#e0994c"];
+    const textToRender = ["buy new and old products.", "sell your own products.", "sell products for free."]
+
     useEffect(() => {
         const handleScroll = (event) => {
             let innerHeightValue = $("#landingRightColumnDiv").innerHeight() / 2;
+
+            //Animation
             const landingRightDivDegreesToRotate = calculateRotation(innerHeightValue, totalDegreesToRotateLandingRightDiv);
             const landingBuySellDivDegreesToRotate = calculateRotation(innerHeightValue, totalDegreesToRotateLandingBuySellDiv);
 
@@ -36,7 +45,7 @@ const LandingPage = () => {
 
             }
 
-            if (landingBuySellDivDegreesToRotate < totalDegreesToRotateLandingBuySellDiv ) {
+            if (landingBuySellDivDegreesToRotate < totalDegreesToRotateLandingBuySellDiv) {
                 $(".landingBuySellDiv").css({
                     "transform": `rotate(${totalDegreesToRotateLandingBuySellDiv - landingBuySellDivDegreesToRotate}deg)`
                 });
@@ -46,40 +55,46 @@ const LandingPage = () => {
                     "transform": `rotate(0deg)`
                 });
             }
-
-            //Animation
-            // console.log(getRotationDegree($("#landingRightColumnDiv")));
-
         }
 
         window.addEventListener("scroll", handleScroll);
-        // window.addEventListener("DOMContentLoaded", handleScroll);
+
     }, []);
 
+
+    //Color Animation     
+    useEffect(() => {
+        const animationInterval=setInterval(animateColor, 4000);
+        return ()=>clearInterval(animationInterval);
+    }, []);
+
+    let colorIndex = 0;       
+    
+    const animateColor = () => {                    
+        for(var i=0;i<animationColors.length;i++){
+            if(i==colorIndex)setAnimationColor(animationColors[colorIndex]);
+        }
+        
+        colorIndex++;
+
+        if(colorIndex>animationColors.length-1){
+            colorIndex=0;
+        }
+    };
+
+
     const calculateRotation = (innerHeightValue, totalDegreesToRotate) => {
-        // let innerHightValue = document.documentElement.offsetHeight/2;
-        // let innerHightValue = $("#landingRightColumnDiv")[0].scrollHeight/2;
         let oneDegreePixelValue = innerHeightValue / totalDegreesToRotate;
         let onePixelDegree = 1 / oneDegreePixelValue;
-        // console.log(onePixelDegree);
-        let degreesToRotate = totalDegreesToRotate;
-        let marginToDecrease = window.scrollY * onePixelDegree;
-        // console.log("scrollY", window.scrollY);
-        // console.log("scroll Height", $("#landingRightColumnDiv")[0].scrollHeight);
-        // console.log("scrollY", window.scrollY);
-        // console.log(document.documentElement.offsetHeight);
 
+        let degreesToRotate = totalDegreesToRotate;
+        let marginToDecrease = window.scrollY * onePixelDegree;        
         $("#landingRightBackgroundDiv").css({
             "right": `-${marginToDecrease * 1.2}%`
-        })
-        // console.log("inner Height", $("#landingRightColumnDiv").innerHeight());
+        });
 
         degreesToRotate = window.scrollY * onePixelDegree;
-
-
-
         return degreesToRotate;
-
     }
 
     const getRotationDegree = (elementObj) => {
@@ -99,6 +114,8 @@ const LandingPage = () => {
         return angle;
     }
 
+
+
     return (
         <>
             <Layout style={{
@@ -108,7 +125,7 @@ const LandingPage = () => {
                 <Content>
                     <Row gutter={24} style={{ textAlign: "center" }}>
                         <Col md={{ span: 6, offset: 3 }}>
-                            <WelcomeDiv>
+                            <WelcomeDiv animatedbackgroundColor={animationColor}>
                                 <div>
                                     Welcome To
                                 </div>
@@ -116,25 +133,30 @@ const LandingPage = () => {
                                     Saman.com
                                 </div>
                                 <div className="welcome-div-text">
-                                    A place where you can buy new and old products and we also give you free online selling platform.
+                                    A place where you can
+                                    <span className="welcome-span"> <ReactRotatingText items={textToRender} /></span>
+
                                 </div>
                             </WelcomeDiv>
 
                         </Col>
                         <Col md={{ span: 11, offset: 1 }}>
                             <LandingRightColumn ref={landingRightColumnElement} id="landingRightColumnDiv">
-                                <RightBackGround id="landingRightBackgroundDiv">
+                                <RightBackGround id="landingRightBackgroundDiv" animatedbackgroundColor={animationColor}>
                                 </RightBackGround>
                                 <PCBackgroundImg
                                     src={pcBackgroundImg}
                                 >
                                 </PCBackgroundImg>
+                                {/* <div style={{ zIndex: "99999" }}>
+                                    <Image src={logo}></Image>
+                                </div> */}
 
                             </LandingRightColumn>
 
                         </Col>
-                    </Row>                    
-                    <BuySellInformation />
+                    </Row>
+                    <BuySellInformation animatedbackgroundColor={animationColor}/>
                     <HowSamanWorksDiv />
                 </Content>
             </Layout>

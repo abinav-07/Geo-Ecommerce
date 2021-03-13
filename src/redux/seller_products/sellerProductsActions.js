@@ -130,7 +130,7 @@ export const addSellerProducts = (formValues) => {
                 if (err.response.data.details) {
                     dispatch(onAddSellerProductsError(err.response.data.details[0]["message"]));
                 } else {
-                    dispatch(onAddSellerProductsError(err.response.data));
+                    dispatch(onAddSellerProductsError(err.response.data.message));
                 }
             })
     }
@@ -142,8 +142,8 @@ export const getAllSellerProducts = (user_id) => {
         axios.get(`${API_URL}/users/get-seller-products?user_id=${user_id}`)
             .then(res => {
                 dispatch(onGetAllSellerProductsSuccess(res.data));
-            }).catch(err => {
-                dispatch(onGetAllSellerProductsError(err.response.data));
+            }).catch(err => {               
+                dispatch(onGetAllSellerProductsError(err.response.data.message));
             });
     }
 }
@@ -155,10 +155,11 @@ export const deleteSellerProduct = (value) => {
             .then(res => {                
                 dispatch(onDeleteSellerProductSuccess(res.data));
             }).catch(err => {
+                console.log(err.response);
                 if (err.response.data.details) {
                     dispatch(onDeleteSellerProductError(err.response.data.details[0]["message"]));
                 } else {
-                    dispatch(onDeleteSellerProductError(err.response.data));
+                    dispatch(onDeleteSellerProductError(err.response.data.message));
                 }
             });
     }

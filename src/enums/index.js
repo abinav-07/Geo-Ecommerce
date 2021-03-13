@@ -16,8 +16,6 @@ export const NAVBAR_TAB_KEYS = {
 }
 
 
-
-
 export const PRODUCT_TYPES = {
     // Same As Value From SELL_YOUR_PRODUCTS_PRODUCT_TYPES Const
     ALL_PRODUCTS:"allProducts",
@@ -246,6 +244,12 @@ export const SELL_YOUR_PRODUCTS_PRODUCT_TYPES = [
         ]
     },
 ]
+
+export const ADMIN_NAV_BAR_KEYS={
+    CUSTOMER_DETAILS:"customers",
+    ORDERS_DETAILS:"orders",
+    RATINGS_DETAILS:"ratings"
+}
 
 
 

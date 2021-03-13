@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, withRouter, useHistory } from 'react-router-dom';
 import { Layout, Row, Col, Form, Input, Checkbox, Button, Divider, Image, Alert } from 'antd';
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
-import { CustomizedButton, CustomGoogleLoginBtn } from '../../components/login_sign_up_components';
+import { CustomizedButton, CustomGoogleLoginBtn, DividerColumn } from '../../components/login_sign_up_components';
 import { LeftOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import logo from '../../assests/images/logo.png'
 import { google_client_id } from '../../config';
@@ -141,11 +141,12 @@ const LoginUserPage = () => {
 
                                 </Form>
                             </Col>
-                            <Col xs={{ span: 24 }} md={{ span: 2 }} style={{ textAlign: "center", padding: "2.3rem 0" }}>
-                                <Divider type="vertical" style={{ height: "50%", 'backgroundColor': "#616362" }}></Divider>
+                            <DividerColumn xs={{ span: 24 }} md={{ span: 2 }}>
+                                <Divider type="vertical" style={{  'backgroundColor': "#616362" }}></Divider>
                                 <span>OR</span>
-                            </Col>
-                            <Col xs={{
+                            </DividerColumn>
+                            <Col 
+                            xs={{
                                 span: 24
                             }}
                                 md={{

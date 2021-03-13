@@ -35,7 +35,7 @@ export const getAllProducts = (user_id) => {
             .then(res => {
                 dispatch(onGettingAllProductsSuccess(res.data));
             }).catch(err => {                
-                dispatch(onGettingAllProductsError(err.response.data));
+                dispatch(onGettingAllProductsError(err.response.data.message));
             });
     });
 } 

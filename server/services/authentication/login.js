@@ -24,13 +24,13 @@ const loginUser = async (req, res) => {
             const validateResponse = schema.validate(req.body, { abortEarly: false });
 
             if (validateResponse && validateResponse.error) {
-                res.status(401).send(validateResponse);
+                res.status(401).send(validateResponse.error);
             } else {
                 const userResponse = await Users.getUserByEmail(req.body.email);
 
-                if (!userResponse || !userResponse.email) res.status(401).send("Email not registered");
+                if (!userResponse || !userResponse.email) res.status(401).json({message:"Email not registered"});
 
-                if (userResponse && (userResponse.google_id && userResponse.google_id != req.body.googleId)) res.status(401).send("Google Id Error");
+                if (userResponse && (userResponse.google_id && userResponse.google_id != req.body.googleId)) res.status(401).json({message:"Google Id Error"});
 
                 if (userResponse && userResponse.email) {
                     const payload = {
@@ -67,13 +67,13 @@ const loginUser = async (req, res) => {
             const validateResponse = schema.validate(req.body, { abortEarly: false });
 
             if (validateResponse && validateResponse.error) {
-                res.status(401).send(validateResponse);
+                res.status(401).send(validateResponse.error);
             } else {
                 const userResponse = await Users.getUserByEmail(req.body.email);
 
-                if (!userResponse || !userResponse.email) res.status(401).send("Email not registered");
+                if (!userResponse || !userResponse.email) res.status(401).json({message:"Email not registered"});
 
-                if (userResponse && (userResponse.password && !bcrypt.compareSync(req.body.password, userResponse.password))) res.status(401).send("Incorrect Password");
+                if (userResponse && (userResponse.password && !bcrypt.compareSync(req.body.password, userResponse.password))) res.status(401).json({message:"Incorrect Password"});
 
                 if (userResponse && bcrypt.compareSync(req.body.password, userResponse.password)) {
                     const payload = {

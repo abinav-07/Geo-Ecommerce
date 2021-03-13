@@ -5,20 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { message } from 'antd';
 import Routes from './routes';
-import { getToken } from './utils/storage';
+import { getAdminToken, getToken } from './utils/storage';
 import { getAllSellerProducts } from './redux';
 
 function App() {
-
-  const dispatch = useDispatch();
-
-  const userId = useSelector(state => state.user.user?.user_id);
-  const addingSellerProductsSuccess = useSelector(state => state.addSellerProducts?.addingSellerProductsSuccess);
-
-  //Get Seller All Product Details
-  useEffect(() => {
-    dispatch(getAllSellerProducts(userId));
-  }, [userId, addingSellerProductsSuccess]);
 
   const PrivateRouter = () => {
     useEffect(() => {
@@ -30,6 +20,15 @@ function App() {
     return <Redirect to="/"></Redirect>
   }
 
+  const AdminPrivateRouter = () => {
+    useEffect(() => {
+      message.info({
+        content: "You must be admin to view this page!"
+      })
+    });
+    return <Redirect to="/admin/login" />
+  }
+
   return (
     <Switch>
       {Routes.map((
@@ -37,6 +36,7 @@ function App() {
           name,
           path,
           privateRoute,
+          adminRoute,
           exact,
           displaySearchBar,
           layout: Layout,
@@ -44,7 +44,7 @@ function App() {
         },
         i
       ) => {
-        if (privateRoute) {
+        if (privateRoute && !adminRoute) {
           return (
             <Route
               key={`${path}_${i}`}
@@ -64,6 +64,25 @@ function App() {
             >
             </Route>
           )
+        } else if (privateRoute && adminRoute) {
+          return (
+            <Route
+              key={`${path}_${i}`}
+              path={path}
+              exact={exact}
+              render={(props) => {
+                if (!getAdminToken()) {
+                  return <AdminPrivateRouter />;
+                } else {
+                  return (
+                    <Layout {...props}>
+                      <Component {...props}></Component>
+                    </Layout>
+                  )
+                }
+              }}
+            />
+          )
         } else {
           return (
             <Route
@@ -82,6 +101,9 @@ function App() {
           )
         }
       })}
+      <Route path="*" exact>
+        <div style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center" }}>Page Not Found!</div>
+      </Route>
     </Switch >
   );
 }

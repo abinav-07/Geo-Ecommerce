@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Products, { foreignKey: "seller_id", as: "products" });
     }
   };
   User.init({
-    user_id:{type:DataTypes.INTEGER, primaryKey:true,autoIncrement: true} ,
+    user_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.TEXT,
@@ -24,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-    tableName:"users"
+    tableName: "users"
   });
   return User;
 };

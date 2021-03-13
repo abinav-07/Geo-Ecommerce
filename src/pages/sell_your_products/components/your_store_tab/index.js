@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, Alert, Button, Image, Modal, Input, message, notification } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { deleteSellerProduct, onDeleteSellerProductReset, updateSellerProduct, onUpdateSellerProductReset, getAllSellerProducts } from '../../../../redux';
+import $ from 'jquery';
 
 const SellerStoreTab = () => {
 
@@ -105,16 +106,18 @@ const SellerStoreTab = () => {
 
         if (deleteModalInput === "DELETE") {
             dispatch(deleteSellerProduct(value));
-            console.log(products);
+
             let allSellerProductsFiltered = products?.filter(data => data.product_id !== value.product_id);
-            console.log(allSellerProductsFiltered);
+
             setProducts([...allSellerProductsFiltered]);
             setProductIdToDelete(null);
             setProductNameToDelete(null);
             setDeleteModalInput(null);
             setShowDeleteModal(false);
         } else {
-            message.error("Type DELETE Again!");
+            $("#modal-input").css({
+                "borderColor": "red"
+            });
         }
     }
 
@@ -195,14 +198,14 @@ const SellerStoreTab = () => {
                                 width: "400"
                             }}
                         >
-                            {record?.productImages.map((data, i) => (
+                            {record?.productImages?.map((data, i) => (
                                 <Image
                                     style={{
                                         padding: "5px"
                                     }}
                                     key={i}
                                     width={100}
-                                    src={require(`../../../../assests/images/product_images/${data?.image ? data?.image : ""}`).default}
+                                    src={require(`../../../../assests/images/product_images/${data?.image ? data?.image : ""}`).default || ""}
                                 />
                             ))}
                         </Image.PreviewGroup>
@@ -218,7 +221,7 @@ const SellerStoreTab = () => {
             render: (text, record, index) =>
             (
                 <Button
-                    type="primary"
+                    type="danger"
                     icon={<DeleteOutlined />}
                     onClick={() => {
                         openDeleteModal(record);
@@ -230,12 +233,12 @@ const SellerStoreTab = () => {
 
     const tableData = products?.map((data, index) => ({
         key: index,
-        productName: data.product_name,
-        productQuantity: data.product_quantity,
-        productType: data.product_type,
-        productSubType: data.product_sub_type,
-        productId: data.product_id,
-        productImages: data.product_images
+        productName: data?.product_name,
+        productQuantity: data?.product_quantity,
+        productType: data?.product_type,
+        productSubType: data?.product_sub_type,
+        productId: data?.product_id,
+        productImages: data?.product_images
     }));
     return (
         <div
@@ -271,8 +274,12 @@ const SellerStoreTab = () => {
                 <p>DELETING THE PRODUCT WILL DELETE ALL ITS IMAGES AND DETAILS.</p>
                 <p>TYPE "DELETE" AND CLICK OK BELOW TO DELETE.</p>
                 <Input
+                    id="modal-input"
                     value={deleteModalInput}
                     onChange={(e) => {
+                        $("#modal-input").css({
+                            "borderColor": "black"
+                        });
                         setDeleteModalInput(e.target.value);
                     }}
                 >

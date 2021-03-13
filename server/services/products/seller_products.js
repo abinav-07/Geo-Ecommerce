@@ -54,7 +54,7 @@ const addSellerProducts = async (req, res) => {
                 }
             ], function (err, results) {
                 if (err) {
-                    res.status(400).send(err);
+                    res.status(400).json({message:err});
                 } else {
                     res.status(200).send("Product Added!");
                 }
@@ -89,6 +89,7 @@ const deleteSellerProduct = async (req, res) => {
 
     try {
         const validateResponse = schema.validate(req.body, { abortEarly: false });
+       
         if (validateResponse && validateResponse.error) res.status(400).send(validateResponse.error);
 
         if (!validateResponse.error) {

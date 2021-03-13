@@ -3,7 +3,8 @@ import { Row, Col, Image } from 'antd';
 import styled from 'styled-components';
 import { Fragment } from 'react';
 import { HowSamanWorksMainDiv } from '../style';
-import  WhySamanBuyImage from '../../../assests/images/why_saman_buy.png';
+import WhySamanBuyImage from '../../../assests/images/why_saman_buy.png';
+import WhySamanSellImage from '../../../assests/images/why_saman_sell.png';
 
 const HowSamanWorksDiv = () => {
     return (
@@ -27,16 +28,20 @@ const HowSamanWorksDiv = () => {
 
             </Row>
             <Row justify="center" style={{
-                textAlign:'center'
-            }}>
+                textAlign: 'center',
+                alignItems: "baseline"
+            }}
+
+            >
                 <Col
                     md={4}
-                    offset={2}
+
                 >
                     <div>
-                    <Image
-                        src={WhySamanBuyImage}
-                    />                    
+                        <Image
+                            src={WhySamanBuyImage}
+                            preview={false}
+                        />
                     </div>
                     <div>
                         <p className="how-it-works-info-headers">Buy from your closest seller.</p>
@@ -46,26 +51,44 @@ const HowSamanWorksDiv = () => {
                     </div>
                 </Col>
                 <Col
-                 md={4}
-                 offset={2}
+                    md={4}
+                    offset={2}
                 >
-                    <Image
-                        src={WhySamanBuyImage}
-                    >
+                    <div>
+                        <Image
+                            src={WhySamanSellImage}
+                            width={100}
+                            preview={false}
+                        />
 
-                    </Image>
+                    </div>
+                    <div>
+                        <p className="how-it-works-info-headers">Buy from your closest seller.</p>
+                    </div>
+                    <div>
+                        <p className="how-it-works-info-contents">Saman recommends you products from the sellers that are nearest to you for your faster delivery .</p>
+                    </div>
+
                 </Col>
                 <Col
                     md={4}
                     offset={2}
                 >
-                    <Image
-                        src={WhySamanBuyImage}
-                    >
+                    <div>
+                        <Image
+                            src={WhySamanBuyImage}
+                            preview={false}
+                        />
+                    </div>
+                    <div>
+                        <p className="how-it-works-info-headers">Buy from your closest seller.</p>
+                    </div>
+                    <div>
+                        <p className="how-it-works-info-contents">Saman recommends you products from the sellers that are nearest to you for your faster delivery .</p>
+                    </div>
 
-                    </Image>
                 </Col>
-                
+
             </Row>
         </HowSamanWorksMainDiv>
     )

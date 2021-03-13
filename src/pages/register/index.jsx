@@ -4,13 +4,13 @@ import { Link, useHistory, Redirect } from 'react-router-dom';
 import Layout, { Header, Content, Footer } from 'antd/lib/layout/layout';
 import { Row, Col, Form, Input, Divider, Image, Button, Alert } from 'antd';
 import { LeftOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { CustomizedButton, CustomGoogleLoginBtn } from '../../components/login_sign_up_components';
+import { CustomizedButton, CustomGoogleLoginBtn, DividerColumn } from '../../components/login_sign_up_components';
 import { google_client_id } from '../../config';
 import logo from '../../assests/images/logo.png';
 import { getToken } from '../../utils/storage';
 
 //Actions
-import { registerUser,onUserErrorReset } from '../../redux';
+import { registerUser, onUserErrorReset } from '../../redux';
 
 const RegisterUserPage = () => {
     const history = useHistory();
@@ -19,24 +19,24 @@ const RegisterUserPage = () => {
     const registerErrorMsg = useSelector(state => state.user?.registrationError);
 
     //Reset Errors
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(onUserErrorReset());
-    },[]);
+    }, []);
 
     //Google Sign Up Response
-    const responseGoogle = (response) => {        
-        const googleResponse=response.profileObj;
-        const googleFormValues={
-            firstName:googleResponse.name,
-            email:googleResponse.email,
-            googleId:googleResponse.googleId,
-            type:"googleAuth"      
+    const responseGoogle = (response) => {
+        const googleResponse = response.profileObj;
+        const googleFormValues = {
+            firstName: googleResponse.name,
+            email: googleResponse.email,
+            googleId: googleResponse.googleId,
+            type: "googleAuth"
         }
         dispatch(registerUser(googleFormValues, history));
     }
 
-    const responseGoogleFailure=(response)=>{
-        console.log('Failed: ',response);
+    const responseGoogleFailure = (response) => {
+        console.log('Failed: ', response);
     }
 
     const onFinish = (values) => {
@@ -45,7 +45,7 @@ const RegisterUserPage = () => {
             lastName: values.lastName,
             email: values.registerEmail,
             password: values.registerPassword,
-            confirm_password: values.registerConfirmPassword,            
+            confirm_password: values.registerConfirmPassword,
         }
         dispatch(registerUser(formValues, history));
     }
@@ -160,11 +160,13 @@ const RegisterUserPage = () => {
                                     </Form.Item>
                                 </Form>
                             </Col>
-                            <Col xs={{ span: 24 }} md={{ span: 2 }} style={{textAlign: "center",}} align="middle">
-                                <Divider type="vertical" style={{ height: "50%", 'backgroundColor': "#616362" }}></Divider>
+                            <DividerColumn xs={{ span: 24 }} md={{ span: 2 }} style={{ textAlign: "center", }} align="middle">
+                                <Divider type="vertical" style={{ 'backgroundColor': "#616362" }}></Divider>
                                 <span>OR</span>
-                            </Col>
-                            <Col md={{ span: 8 }}>
+                            </DividerColumn>
+                            <Col xs={{
+                                span: 24
+                            }} md={{ span: 8 }}>
                                 <CustomGoogleLoginBtn
                                     clientId={google_client_id}
                                     buttonText="Sign Up With Google"

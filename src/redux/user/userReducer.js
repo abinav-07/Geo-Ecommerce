@@ -13,7 +13,8 @@ import {
     FETCH_USER,
     FETCH_USER_SUCCESS,
     FETCH_USER_ERROR,
-    USER_ERROR_RESET
+    USER_ERROR_RESET,
+    UPDATE_USER_RATING
 } from './userTypes';
 
 const initialState = {
@@ -43,15 +44,16 @@ const userRegisterReducer = (state = initialState, action) => {
             }
         case USER_REGISTER_SUCCESS:
             //User Response
-            const User=action?.payload;            
+            const User = action?.payload;
             return {
                 ...state,
                 registeringUser: false,
                 user: {
-                    user_id:User.user_id,
-                    first_name:User.first_name,
-                    last_name:User.last_name,
-                    email:User.email
+                    user_id: User.user_id,
+                    first_name: User.first_name,
+                    last_name: User.last_name,
+                    email: User.email,
+                    application_rating: User.application_rating
                 },
                 registrationError: null
             }
@@ -63,7 +65,7 @@ const userRegisterReducer = (state = initialState, action) => {
                 registrationError: action?.payload
             }
         case USER_REGISTER_RESET:
-            return{
+            return {
                 ...state,
                 registeringUser: false,
                 registrationSuccess: null,
@@ -83,15 +85,16 @@ const userLoginReducer = (state = initialState, action) => {
                 loggingError: null
             }
         case USER_LOGIN_SUCCESS:
-            const User=action?.payload;
+            const User = action?.payload;
             return {
                 ...state,
                 loggingIn: false,
                 user: {
-                    user_id:User.user_id,
-                    first_name:User.first_name,
-                    last_name:User.last_name,
-                    email:User.email
+                    user_id: User.user_id,
+                    first_name: User.first_name,
+                    last_name: User.last_name,
+                    email: User.email,
+                    application_rating: User.application_rating
                 },
                 loggingError: null
             }
@@ -102,39 +105,47 @@ const userLoginReducer = (state = initialState, action) => {
                 user: null,
                 loggingError: action?.payload
             }
-            default:
-                return state
+        case UPDATE_USER_RATING:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    application_rating: action.payload
+                }
+            }
+        default:
+            return state
     }
 }
 
-const userLogoutReducer=(state=initialState,action)=>{
+const userLogoutReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_LOGOUT_SUCCESS:
-            return{
+            return {
                 ...state,
                 loggingIn: false,
                 user: null,
                 loggingError: null
-            }            
-    
+            }
+
         default:
             return state;
     }
 }
 
-const userErrorReset=(state=initialState,action)=>{
+const userErrorReset = (state = initialState, action) => {
     switch (action.type) {
         case USER_ERROR_RESET:
-            return{
+            return {
                 ...state,
                 loggingError: null,
                 registrationError: null
             }
-            
-    
+
+
         default:
             return state;
     }
 }
 
-export const reducer = reduceReducers(userRegisterReducer, userLoginReducer, userLogoutReducer,userErrorReset);
+export const reducer = reduceReducers(userRegisterReducer, userLoginReducer, userLogoutReducer, userErrorReset);

@@ -39,8 +39,20 @@ const registerGoogleUser = async (userObj) => {
     return user;
 }
 
+const updateApplicationRating = async (values) => {
+    console.log(values);
+    const response = await User.update({ application_rating: values.application_rating }, {
+        where: {
+            user_id: values.user_id
+        }
+    });
+
+    return response;
+}
+
 module.exports = {
     getUserByEmail,
     registerUser,
-    registerGoogleUser
+    registerGoogleUser,
+    updateApplicationRating
 }

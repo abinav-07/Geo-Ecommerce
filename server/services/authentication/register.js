@@ -32,7 +32,7 @@ const registerUser = async (req, res) => {
 
             const response = await Users.getUserByEmail(user.email) || {};
             if (response.email) {
-                res.status(400).send("User Already Registered");
+                res.status(400).json({message:"User Already Registered"});
             } else {
                 const registerResponse = await Users.registerGoogleUser(req.body);
                 const payload = {
@@ -81,7 +81,7 @@ const registerUser = async (req, res) => {
 
             const response = await Users.getUserByEmail(user.email) || {};
             if (response.email) {
-                res.status(400).send("User Already Registered");
+                res.status(400).json({message:"User Already Registered"});
             } else {
                 const registerResponse = await Users.registerUser(req.body);
                 const payload = {
