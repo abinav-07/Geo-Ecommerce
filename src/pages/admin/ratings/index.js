@@ -23,8 +23,6 @@ const AdminRatingsPage = () => {
     useEffect(() => {
         dispatch(getAllCustomerDetails());
     }, []);
-    console.log(allCustomerDetails);
-
 
     useEffect(() => {
         let totalRaters = 0;
@@ -68,8 +66,8 @@ const AdminRatingsPage = () => {
                             flexDirection: "column"
                         }}
                     >
-                        <p id="total-rating">{totalRating}</p>
-                        <Rate value={totalRating} disabled />
+                        <p id="total-rating">{totalRating?totalRating:0}</p>
+                        <Rate allowHalf value={totalRating?totalRating:0} disabled />
                         <p id="total-raters">Total Raters: {totalRaters}</p>
                     </Col>
                     <Col

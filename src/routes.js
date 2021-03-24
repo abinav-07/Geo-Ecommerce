@@ -6,6 +6,7 @@ import RegisterUserPage from './pages/register';
 import LandingPage from './pages/landing';
 import SellYourProductsPage from './pages/sell_your_products';
 import ProductsPage from './pages/products_views';
+import ChatPage from './pages/chat';
 import LoginAdminPage from './pages/admin/login';
 import AdminCustomerPage from './pages/admin/customer';
 import AdminCustomerProductDetails from './pages/admin/customer/customer_products_details';
@@ -69,6 +70,16 @@ const Routes = [
         component: ProductsPage
     },
     {
+        name: "Chat",
+        path: "/chat",
+        privateRoute: true,
+        adminRoute: false,
+        exact: false,
+        displaySearchBar: false,
+        layout: BlankLayout,
+        component: ChatPage
+    },
+    {
         name: "Admin Login Page",
         path: "/admin/login",
         privateRoute: false,
@@ -99,14 +110,14 @@ const Routes = [
         component: AdminCustomerProductDetails
     },
     {
-        name:"Admin Ratings Page",
-        path:`/admin/${ADMIN_NAV_BAR_KEYS.RATINGS_DETAILS}`,
-        privateRoute:true,
-        adminRoute:true,
-        exact:true,
-        displaySearchBar:false,
-        layout:AdminLayout,
-        component:AdminRatingsPage
+        name: "Admin Ratings Page",
+        path: `/admin/${ADMIN_NAV_BAR_KEYS.RATINGS_DETAILS}`,
+        privateRoute: true,
+        adminRoute: true,
+        exact: true,
+        displaySearchBar: false,
+        layout: AdminLayout,
+        component: AdminRatingsPage
     }
 ]
 

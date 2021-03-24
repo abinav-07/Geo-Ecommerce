@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux';
 import { Row, Col, Modal, Button } from "antd";
 import { select } from "async";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+import { Link } from "react-router-dom";
 import { ProductModalDiv } from './style';
+import { getToken } from '../../../utils/storage';
 
 
 const ProductModal = ({
@@ -11,10 +14,14 @@ const ProductModal = ({
     selectedProduct,
     setSelectedProduct
 }) => {
+
+    const user_id = useSelector(state => state?.user?.user?.user_id);
+
     const handleCloseModal = () => {
         setOpenProductModalBool(false);
         setSelectedProduct(null);
     }
+    console.log(selectedProduct);
 
     const imageGalleryProps = {
         items: selectedProduct ? selectedProduct.product_images?.map((data, i) => (
@@ -42,7 +49,19 @@ const ProductModal = ({
                         key="submit"
                         type="primary"
                     >
-                        Talk
+                        <Link
+                            onClick={
+                                () => {
+                                    //Setting User Token to storage
+                                    const userToken = getToken();
+                                    localStorage.setItem("user", userToken);
+                                }
+                            }
+                            to={`/chat?user_id=${user_id}&product_id=${selectedProduct?.product_id}&seller_id=${selectedProduct?.seller_id}`}
+                            target="_blank"
+                        >
+                            Talk
+                        </Link>
                     </Button>
                 ]}
             >
@@ -58,7 +77,6 @@ const ProductModal = ({
                         <h1 id="product_name">{selectedProduct?.product_name}</h1>
                         <ul>
                             {selectedProduct?.product_details.map((detail, i) => (
-                                console.log(i),
                                 <li key={i}>{detail?.product_detail}</li>
                             )
                             )}
@@ -68,7 +86,6 @@ const ProductModal = ({
                         <h4>Note: If you wish to buy the product, click the "Talk" button.</h4>
                     </Col>
                 </Row>
-
             </ProductModalDiv>
         </>
     )

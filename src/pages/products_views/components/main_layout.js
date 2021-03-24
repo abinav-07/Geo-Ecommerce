@@ -26,7 +26,7 @@ const MainProductsLayout = ({ allProducts, productHeader }) => {
 
     useEffect(() => {
         let filteredSearchProducts;
-
+        //Filter based on all types
         filteredSearchProducts = products?.filter(product => {
             if (product.product_name.toLowerCase().includes(searchInputText) ||
                 product.product_type.toLowerCase().includes(searchInputText) ||

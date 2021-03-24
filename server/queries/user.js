@@ -27,9 +27,7 @@ const registerUser = async (userObj) => {
 }
 
 const registerGoogleUser = async (userObj) => {
-    //console.log(User.users.fi);
-    // const hashPassword=bcrypt.hashSync(userObj.password,2);    
-
+    
     const user = await User.create({
         first_name: userObj.firstName,
         email: userObj.email,

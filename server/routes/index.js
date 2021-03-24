@@ -7,6 +7,8 @@ const sellerProductsRoutes = require("../services/products/seller_products");
 const getAllProductsRoutes = require("../services/products/get_all_products");
 const getAllCustomerDetailsRoutes = require("../services/admin/admin_customer_details");
 const userRoutes=require("../services/user/update_user");
+const messageRoutes=require("../services/messages/chat-messages");
+
 const checkJWT = require("../middlewares/jwt");
 
 
@@ -41,5 +43,8 @@ router.post("/admin/delete-customer", getAllCustomerDetailsRoutes.deleteCustomer
 
 //User Routes
 router.post("/users/update-application-rating",userRoutes.updateApplicationRating);
+
+//Message Routes
+router.get("/users/chat-messages",messageRoutes.getRoomMessages);
 
 module.exports = router;
