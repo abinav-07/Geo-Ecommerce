@@ -45,15 +45,18 @@ const userRegisterReducer = (state = initialState, action) => {
         case USER_REGISTER_SUCCESS:
             //User Response
             const User = action?.payload;
+
             return {
                 ...state,
                 registeringUser: false,
                 user: {
-                    user_id: User.user_id,
-                    first_name: User.first_name,
-                    last_name: User.last_name,
-                    email: User.email,
-                    application_rating: User.application_rating
+                    user_id: User?.user_id,
+                    first_name: User?.first_name,
+                    last_name: User?.last_name,
+                    email: User?.email,
+                    application_rating: User?.application_rating,
+                    latitude: User?.address?.latitude,
+                    longitude: User?.address?.longitude,
                 },
                 registrationError: null
             }
@@ -77,6 +80,7 @@ const userRegisterReducer = (state = initialState, action) => {
 }
 
 const userLoginReducer = (state = initialState, action) => {
+    
     switch (action.type) {
         case USER_LOGIN:
             return {
@@ -86,6 +90,7 @@ const userLoginReducer = (state = initialState, action) => {
             }
         case USER_LOGIN_SUCCESS:
             const User = action?.payload;
+            
             return {
                 ...state,
                 loggingIn: false,
@@ -94,7 +99,11 @@ const userLoginReducer = (state = initialState, action) => {
                     first_name: User.first_name,
                     last_name: User.last_name,
                     email: User.email,
-                    application_rating: User.application_rating
+                    application_rating: User.application_rating,
+                    latitude: User.address?.latitude,
+                    longitude: User.address?.longitude,
+                    order_details:User.order_details?User.order_details:null,
+                    message_rooms:User.message_rooms?User.message_rooms:null,
                 },
                 loggingError: null
             }

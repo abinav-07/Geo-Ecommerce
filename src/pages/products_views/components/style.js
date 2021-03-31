@@ -77,6 +77,10 @@ export const CardDiv = styled(Card)`
         font-weight:900;
         font-size:1.2rem;
     }
+    .product-delivery-time{
+        font-size:1rem;
+        font-weight:900;
+    }
     .expandable-icon{
         font-size:1.4rem;
         border:1px dashed black;

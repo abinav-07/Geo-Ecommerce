@@ -15,6 +15,9 @@ import { registerUser, onUserErrorReset } from '../../redux';
 const RegisterUserPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const [latitude, setLatitude] = useState();
+    const [longitude, setLongitude] = useState();
     const registeringUser = useSelector(state => state.user?.registeringUser);
     const registerErrorMsg = useSelector(state => state.user?.registrationError);
 
@@ -30,6 +33,8 @@ const RegisterUserPage = () => {
             firstName: googleResponse.name,
             email: googleResponse.email,
             googleId: googleResponse.googleId,
+            latitude: latitude,
+            longitude: longitude,
             type: "googleAuth"
         }
         dispatch(registerUser(googleFormValues, history));
@@ -46,6 +51,8 @@ const RegisterUserPage = () => {
             email: values.registerEmail,
             password: values.registerPassword,
             confirm_password: values.registerConfirmPassword,
+            latitude: latitude,
+            longitude: longitude,
         }
         dispatch(registerUser(formValues, history));
     }
@@ -60,6 +67,29 @@ const RegisterUserPage = () => {
             history.push("/");
         }
     });
+
+    useEffect(() => {
+        const positionSuccess = (position) => {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            setLatitude(latitude);
+            setLongitude(longitude);
+        }
+
+        const positionError = (error) => {
+            var errors = {
+                1: "Authorization failed", // permission was denied
+                2: "Can't detect location", //position was unavailable
+                3: "Connection timeout" // timedout
+            };
+            console.log("Error:" + errors[error.code]);
+        }
+
+        //Checking wheather geo location is enabled in browser or not 
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(positionSuccess, positionError, { enableHighAccuracy: true });
+        }
+    }, []);
 
     return (
         <>

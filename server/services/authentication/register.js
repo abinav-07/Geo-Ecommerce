@@ -19,7 +19,9 @@ const registerUser = async (req, res) => {
             firstName: Joi.string(),
             email: Joi.string().required().email(),
             type: Joi.string().required(),
-            googleId: Joi.string().required()
+            googleId: Joi.string().required(),
+            latitude: Joi.number().required(),
+            longitude: Joi.number().required(),
         });
         validationResult = schema.validate(req.body, { abortEarly: false });
         if (validationResult && validationResult.error) {
@@ -32,17 +34,21 @@ const registerUser = async (req, res) => {
 
             const response = await Users.getUserByEmail(user.email) || {};
             if (response.email) {
-                res.status(400).json({message:"User Already Registered"});
+                res.status(400).json({ message: "User Already Registered" });
             } else {
+             
                 const registerResponse = await Users.registerGoogleUser(req.body);
+
                 const payload = {
                     user_id: registerResponse.user_id,
                     first_name: registerResponse.first_name,
                     last_name: registerResponse.last_name,
                     email: registerResponse.email,
                     google_id: registerResponse.google_id,
-                    application_rating: registerResponse.application_rating
+                    application_rating: registerResponse.application_rating,
+                    address: registerResponse.address
                 }
+
                 var token = jwt.sign({ user: payload }, jwtSecretKey);
                 res.send({
                     user: payload,
@@ -65,6 +71,8 @@ const registerUser = async (req, res) => {
                 'any.only': "Passwords do not match",
                 'string.required': 'Confirm Password is required'
             }),
+            latitude: Joi.number().required(),
+            longitude: Joi.number().required(),
         });
 
         validationResult = schema.validate(req.body, { abortEarly: false });
@@ -81,16 +89,18 @@ const registerUser = async (req, res) => {
 
             const response = await Users.getUserByEmail(user.email) || {};
             if (response.email) {
-                res.status(400).json({message:"User Already Registered"});
+                res.status(400).json({ message: "User Already Registered" });
             } else {
                 const registerResponse = await Users.registerUser(req.body);
+
                 const payload = {
                     user_id: registerResponse.user_id,
                     first_name: registerResponse.first_name,
                     last_name: registerResponse.last_name,
                     email: registerResponse.email,
                     google_id: registerResponse.google_id,
-                    application_rating: registerResponse.application_rating
+                    application_rating: registerResponse.application_rating,
+                    address: registerResponse.address
                 }
                 var token = jwt.sign({ user: payload }, jwtSecretKey);
                 res.send({

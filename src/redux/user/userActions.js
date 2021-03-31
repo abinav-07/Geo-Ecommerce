@@ -179,3 +179,15 @@ export const logoutUser = (history) => {
         history.push("/");
     }
 }
+
+export const getUserData = () => {
+    return (dispatch) => {
+        axios.get(`${API_URL}/users/user-details`)
+            .then(res => {
+                
+                dispatch(onUserLoginSuccess(res.data));
+            }).catch(err => {                
+                console.log(err);
+            })
+    };
+}

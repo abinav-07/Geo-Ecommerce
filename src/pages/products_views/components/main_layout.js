@@ -37,6 +37,11 @@ const MainProductsLayout = ({ allProducts, productHeader }) => {
             }
         });
 
+        //Filter in Order of Product Distance
+        filteredSearchProducts.sort((a, b) => {
+            return parseFloat(a?.product_distance) - parseFloat(b?.product_distance);
+        });
+
         setFilteredProducts(filteredSearchProducts);
 
     }, [searchInputText])
@@ -113,6 +118,10 @@ const MainProductsLayout = ({ allProducts, productHeader }) => {
                                     <div className="card-contents">
                                         <div>
                                             <h2>{item?.product_name}</h2>
+                                        </div>
+                                        <div>
+                                            <p className="product-delivery-time">Estimated Delivery Time: {item?.time_for_delivery_in_hours}</p>
+
                                         </div>
                                         <div>
                                             <p className="product-price">$ {item?.product_price}</p>

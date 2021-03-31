@@ -6,9 +6,13 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { message } from 'antd';
 import Routes from './routes';
 import { getAdminToken, getToken } from './utils/storage';
-import { getAllSellerProducts } from './redux';
+import { getAllSellerProducts,getUserData } from './redux';
 
 function App() {
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    dispatch(getUserData());
+  },[]);
 
   const PrivateRouter = () => {
     useEffect(() => {

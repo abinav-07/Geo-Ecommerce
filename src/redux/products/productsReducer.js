@@ -4,6 +4,7 @@ import {
     GETTING_ALL_PRODUCTS_ERROR
 } from './productsTypes';
 
+
 //Initial Values
 const initialState = {
     //getting all product
@@ -13,6 +14,7 @@ const initialState = {
 }
 
 const gettingAllProductsReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case GETTING_ALL_PRODUCTS:
             return {
@@ -22,6 +24,8 @@ const gettingAllProductsReducer = (state = initialState, action) => {
                 gettingAllProductsError: null
             }
         case GETTING_ALL_PRODUCTS_SUCCESS:
+            console.log(action.payload);
+
             return {
                 ...state,
                 gettingAllProducts: false,
@@ -41,4 +45,4 @@ const gettingAllProductsReducer = (state = initialState, action) => {
     }
 }
 
-export const reducer=gettingAllProductsReducer;
+export const reducer = gettingAllProductsReducer;

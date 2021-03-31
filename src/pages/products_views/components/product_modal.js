@@ -82,6 +82,7 @@ const ProductModal = ({
                             )}
                         </ul>
                         <h4>Product Available: {selectedProduct?.product_quantity}</h4>
+                        <h4>Estimated Delivery Time: {selectedProduct?.time_for_delivery_in_hours}</h4>
                         <h4>Price: ${selectedProduct?.product_price}</h4>
                         <h4>Note: If you wish to buy the product, click the "Talk" button.</h4>
                     </Col>

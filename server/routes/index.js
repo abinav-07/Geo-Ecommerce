@@ -6,8 +6,10 @@ const registerRoutes = require("../services/authentication/register");
 const sellerProductsRoutes = require("../services/products/seller_products");
 const getAllProductsRoutes = require("../services/products/get_all_products");
 const getAllCustomerDetailsRoutes = require("../services/admin/admin_customer_details");
-const userRoutes=require("../services/user/update_user");
-const messageRoutes=require("../services/messages/chat-messages");
+const updateUserRoutes = require("../services/user/update_user");
+const messageRoutes = require("../services/messages/chat-messages");
+const orderRoutes = require("../services/orders/user_orders");
+const userDetailRoutes = require("../services/user/user_detail");
 
 const checkJWT = require("../middlewares/jwt");
 
@@ -42,9 +44,14 @@ router.get("/admin/get-all-customer-details", getAllCustomerDetailsRoutes.getAll
 router.post("/admin/delete-customer", getAllCustomerDetailsRoutes.deleteCustomer);
 
 //User Routes
-router.post("/users/update-application-rating",userRoutes.updateApplicationRating);
+router.get("/users/user-details", checkJWT, userDetailRoutes.getUserDetail);
+router.post("/users/update-application-rating", checkJWT, updateUserRoutes.updateApplicationRating);
+router.get("/users/get-user-address", checkJWT, userDetailRoutes.getUserAddress);
 
 //Message Routes
-router.get("/users/chat-messages",messageRoutes.getRoomMessages);
+router.get("/users/chat-messages", checkJWT, messageRoutes.getRoomMessages);
+
+//Order Routes
+router.post("/users/register-order", checkJWT, orderRoutes.registerOrder);
 
 module.exports = router;

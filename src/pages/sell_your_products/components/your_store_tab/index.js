@@ -142,6 +142,7 @@ const SellerStoreTab = () => {
             product_quantity: productQuantityToUpdate
         }
         dispatch(updateSellerProduct(value));
+        setShowUpdateModal(false);
     }
 
     const cancelUpdate = () => {

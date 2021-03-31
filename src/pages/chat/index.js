@@ -33,7 +33,7 @@ const ChatPage = () => {
     const [isUserOnline, setIsUserOnline] = useState(false);
 
     const current_user_id = useSelector(state => state?.user?.user?.user_id)
-    
+
 
     useEffect(() => {
         setCurrentUserId(current_user_id);
@@ -66,21 +66,21 @@ const ChatPage = () => {
         }
     }, [API_URL, history.location.search]);
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`${API_URL}/users/chat-messages?room=${room}`)
-        .then(res=>{            
-            res?.data?.[0]?.["messages"]?.forEach(data=>{
-                setMessages(messages=>[...messages,{user_id:data.user_id,text:data.text}])
+            .then(res => {
+                res?.data?.[0]?.["messages"]?.forEach(data => {
+                    setMessages(messages => [...messages, { user_id: data.user_id, text: data.text }])
+                })
             })
-        })
-        .catch(err=>{
-            console.log(err);
-            notification.error({
-                message:err.response?.data,
-                duration:3
-            })
-        });
-    },[room])
+            .catch(err => {
+                console.log(err);
+                notification.error({
+                    message: err.response?.data,
+                    duration: 3
+                })
+            });
+    }, [room])
 
     useEffect(() => {
 
@@ -89,8 +89,8 @@ const ChatPage = () => {
         })
     }, []);
 
-    useEffect(() => {        
-        
+    useEffect(() => {
+
 
         //Seller Id to check if seller is online
         //Check current user id is equal to query user_id
@@ -109,8 +109,6 @@ const ChatPage = () => {
                 onlineUsersArr.hasOwnProperty(userId) ? setIsUserOnline(true) : setIsUserOnline(false)
             }
         })
-
-
     }, [currentUserId, userId]);
 
 
@@ -128,12 +126,12 @@ const ChatPage = () => {
     return (
         <div
             style={{
-                display:"flex",
-                justifyContent:"center"
+                display: "flex",
+                justifyContent: "center"
             }}
         >
             <ChatDiv>
-                <OrderProduct productId={productId} />
+                <OrderProduct userId={userId} productId={productId} sellerId={sellerId} />
                 <ChatBoxDiv>
                     <ActiveInfoBar isUserOnline={isUserOnline} currentUserId={currentUserId} userId={userId} />
                     <Messages messages={messages} />

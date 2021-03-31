@@ -1,8 +1,9 @@
 const async = require("async");
-const { Products, ProductImages, ProductDetails } = require("../models/index");
+const { User, Address, Products, ProductImages, ProductDetails, sequelize } = require("../models/index");
 
 
 const { Op } = require("sequelize");
+const { UserAddOutlined } = require("@ant-design/icons");
 /**
  * START
  * Below Function are for product addition
@@ -112,31 +113,43 @@ const updateSellerProduct = async (values) => {
 }
 
 const getAllProducts = async (user_id) => {
-    const response = await Products.findAll({
-        where: {
-            [Op.and]: [
-                {
-                    seller_id: {
-                        [Op.ne]: user_id
+    const response = await sequelize.transaction(async (t) => {
+        const AllProducts = await Products.findAll({
+            where: {
+                [Op.and]: [
+                    {
+                        seller_id: {
+                            [Op.ne]: user_id
+                        }
+                    },
+                    {
+                        product_quantity: {
+                            [Op.gt]: 0
+                        }
                     }
-                },
-                {
-                    product_quantity: {
-                        [Op.gt]: 0
-                    }
-                }
-            ]
-        },
-        attributes: [["id", "product_id"], "product_name", "is_used_product", "product_type", "product_price", "product_quantity", "product_sub_type", "seller_id"],
-        include: [{
-            model: ProductImages,
-            as: "product_images",
-            attributes: [["id", "image_id"], "image", "product_id"]
-        }, {
-            model: ProductDetails,
-            as: "product_details",
-            attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
-        }]
+                ]
+            },
+            attributes: [["id", "product_id"], "product_name", "is_used_product", "product_type", "product_price", "product_quantity", "product_sub_type", "seller_id"],
+            include: [{
+                model: User,
+                as: "user_detail",
+                include: [{
+                    model: Address,
+                    as: "address"
+                }]
+            },
+            {
+                model: ProductImages,
+                as: "product_images",
+                attributes: [["id", "image_id"], "image", "product_id"]
+            }, {
+                model: ProductDetails,
+                as: "product_details",
+                attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
+            }],
+
+        });
+        return AllProducts;
     });
 
     return response;

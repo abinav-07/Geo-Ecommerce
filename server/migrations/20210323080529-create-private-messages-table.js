@@ -3,11 +3,11 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.sequelize.transaction(async (t) => {
-      await queryInterface.addColumn("message_rooms","id",{
+      await queryInterface.addColumn("message_rooms", "id", {
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        first:true
+        first: true
       });
 
       await queryInterface.createTable("private_messages", {
@@ -40,12 +40,7 @@ module.exports = {
         },
       })
     })
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
+
   },
 
   down: async (queryInterface, Sequelize) => {
