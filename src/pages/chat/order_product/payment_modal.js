@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Col, Row, Image, Button, notification, Input } from 'antd';
 import { PaymentModalModal, PaymentTypeDiv } from './style';
+import KhaltiCheckout from "khalti-checkout-web";
 import CashInHandImg from '../../../assests/images/cash_in_hand.png';
 import { useDispatch, useSelector } from 'react-redux';
 import OnlinePaymentImg from '../../../assests/images/online_payment.png'
 import axios from 'axios';
 import { getAllProducts } from '../../../redux';
-import { API_URL } from '../../../config';
+import { API_URL, KHALTI_PUBLIC_KEY, KHALTI_SECRET_KEY } from '../../../config';
 import $ from "jquery";
 
 const PaymentModal = ({
@@ -23,6 +24,7 @@ const PaymentModal = ({
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [sellerAddress, setSellerAddress] = useState(null);
     const [registerOrderMessage, setRegisterOrderMessage] = useState(null);
+    const [khaltiPaymentSuccessBool, setKhaltiPaymentSuccessBool] = useState(false);
 
     useEffect(() => {
         if (registerOrderError) {
@@ -69,33 +71,122 @@ const PaymentModal = ({
             });
     }, [currentUserId, product]);
 
-    const registerOrder = () => {
-        const values = {
-            product_quantity: inputValue,
-            payment_method: paymentMethod,
-            user_id: currentUserId,
-            seller_id: sellerId,
-            product_id: product.product_id,
-            current_user_address: currentUserAddress,
-            seller_address: sellerAddress,
-            delivered: false,
-            paid: false,
-            time_for_delivery: product?.time_for_delivery_in_hours
+    const liveKhaltiServerCheck = (payload) => {
+        let data = {
+            "token": payload.token,
+            "amount": payload.amount
         }
 
+        let config = {
+            headers: {
+                "Authorization": KHALTI_SECRET_KEY
+            }
+        }
 
-        axios.post(`${API_URL}/users/register-order`, values)
-            .then(res => {
-                setRegisterOrderMessage(res.data);
+        //For Live Testing
+        axios.post("https://cors-anywhere.herokuapp.com/https://khalti.com/api/v2/payment/verify/", data, config)
+            .then(response => {
+                console.log(response.data);
             })
-            .catch(err => {
-                if (err.response.data.details) {
-                    setRegisterOrderError(err.response.data.details[0]["message"]);
-                } else {
-                    setRegisterOrderError(err.response.data.message);
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    //Khalti Configuration
+    let khaltiConfig = {
+        "publicKey": KHALTI_PUBLIC_KEY,
+        "productIdentity": product?.product_id,
+        "productName": product?.product_name,
+        "productUrl": `${API_URL}/products/new-products`,
+        "eventHandler": {
+            onSuccess(payload) {
+                // hit merchant api for initiating verfication                
+                setKhaltiPaymentSuccessBool(true);
+
+                /* For Live Testing
+                 liveKhaltiServerCheck(payload)
+                */
+            },
+            // onError handler is optional
+            onError(error) {
+                // handle errors
+                console.log(error);
+                setKhaltiPaymentSuccessBool(false);
+            }
+        },
+        // one can set the order of payment options and also the payment options based on the order and items in the array
+        paymentPreference: [
+            "KHALTI",
+        ],
+    };
+
+    const checkout = new KhaltiCheckout(khaltiConfig);
+
+    const registerOrder = () => {
+        if (paymentMethod == "cash_in_hand") {
+            const values = {
+                product_quantity: inputValue,
+                payment_method: paymentMethod,
+                user_id: currentUserId,
+                seller_id: sellerId,
+                product_id: product?.product_id,
+                product_price: product?.product_price,
+                current_user_address: currentUserAddress,
+                seller_address: sellerAddress,
+                delivered: false,
+                paid: false,
+                time_for_delivery: product?.time_for_delivery_in_hours
+            }
+
+
+            axios.post(`${API_URL}/users/register-order`, values)
+                .then(res => {
+                    setRegisterOrderMessage(res.data);
+                })
+                .catch(err => {
+                    if (err.response.data.details) {
+                        setRegisterOrderError(err.response.data.details[0]["message"]);
+                    } else {
+                        setRegisterOrderError(err.response.data.message);
+                    }
+
+                });
+        } else if (paymentMethod == "online_payment") {
+            //If paid from khalti successful
+            if (khaltiPaymentSuccessBool) {
+                const values = {
+                    product_quantity: inputValue,
+                    payment_method: paymentMethod,
+                    user_id: currentUserId,
+                    seller_id: sellerId,
+                    product_id: product?.product_id,
+                    product_price: product?.product_price,
+                    current_user_address: currentUserAddress,
+                    seller_address: sellerAddress,
+                    delivered: false,
+                    paid: true,
+                    time_for_delivery: product?.time_for_delivery_in_hours
                 }
 
-            })
+                axios.post(`${API_URL}/users/register-order`, values)
+                    .then(res => {
+                        setRegisterOrderMessage(res.data);
+                    })
+                    .catch(err => {
+                        if (err.response.data.details) {
+                            setRegisterOrderError(err.response.data.details[0]["message"]);
+                        } else {
+                            setRegisterOrderError(err.response.data.message);
+                        }
+                    });
+            } else {
+                notification.error({
+                    message: "Please Pay First!",
+                    duration: 3
+                })
+            }
+        }
     };
 
     const handleImageClick = (paymentType) => {
@@ -108,6 +199,11 @@ const PaymentModal = ({
                 border: "1px solid black"
             });
         } else {
+
+            //Display Khalti Modal
+            //Khalti Takes payment in paisa
+            checkout.show({ amount: (product?.product_price * 100) });
+
             $("#cash-in-hand-img").css({
                 border: "1px solid black"
             });
@@ -176,7 +272,6 @@ const PaymentModal = ({
                     >
                         <PaymentTypeDiv
                             onClick={() => {
-
                                 handleImageClick("online_payment")
                             }}
                             id="online-payment-img"

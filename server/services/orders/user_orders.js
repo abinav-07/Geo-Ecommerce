@@ -19,7 +19,8 @@ const registerOrder = async (req, res) => {
             delivered: Joi.boolean().required(),
             paid: Joi.boolean().required(),
             time_for_delivery: Joi.string(),
-            product_quantity: Joi.number().min(1).max(10).required()
+            product_quantity: Joi.number().min(1).max(10).required(),
+            product_price: Joi.number().required()
         });
 
         validationResult = schema.validate(req.body, { abortEarly: false });

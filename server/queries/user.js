@@ -198,6 +198,7 @@ const registerOrder = async (values) => {
             seller_id: values.seller_id,
             product_id: values.product_id,
             product_quantity: values.product_quantity,
+            product_price: values.product_price,
             delivered: values.delivered,
             delivered_from: values.seller_address,
             delivered_to: values.current_user_address,

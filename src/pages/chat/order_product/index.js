@@ -6,7 +6,7 @@ import { OrderProductDiv } from './style.js';
 import PaymentModal from './payment_modal';
 import axios from 'axios';
 import { API_URL, WEATHER_APP_API } from '../../../config';
-
+import { timeConverter, AVERAGE_BIKE_SPEED, getLatLongDistance } from '../../../utils/harvesine_calculator';
 
 
 const OrderProduct = ({ userId, productId, sellerId }) => {
@@ -17,8 +17,31 @@ const OrderProduct = ({ userId, productId, sellerId }) => {
 
     const current_user_id = useSelector(state => state?.user?.user?.user_id);
     const allProducts = useSelector(state => state.allProducts?.allProducts);
+    const user_latitude = useSelector(state => state?.user?.user?.latitude ? parseFloat(state?.user?.user?.latitude) : "");
+    const user_longitude = useSelector(state => state?.user?.user?.longitude ? parseFloat(state?.user?.user?.longitude) : "");
+
     useEffect(() => {
         const filteredProduct = allProducts?.filter(item => item.product_id == productId);
+
+        let time_for_delivery_in_hours;
+
+        //Adding Time Distance
+        for (let i = 0; i < filteredProduct?.length; i++) {
+
+            let productLat = filteredProduct ? filteredProduct[i]["user_detail"]["address"]["latitude"] : null;
+            let productLong = filteredProduct ? filteredProduct[i]["user_detail"]["address"]["longitude"] : null;
+            const distance = getLatLongDistance(productLat, productLong, user_latitude, user_longitude);
+            if (distance) {
+                time_for_delivery_in_hours = timeConverter((distance / AVERAGE_BIKE_SPEED) * 60); //In Minutes
+            } else {
+                time_for_delivery_in_hours = "Cannot Estimate";
+            }
+
+
+            filteredProduct[i]["product_distance"] = distance;
+            filteredProduct[i]["time_for_delivery_in_hours"] = time_for_delivery_in_hours;
+
+        }
 
         setSelectedProduct(filteredProduct[0]);
 
