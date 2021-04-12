@@ -230,7 +230,7 @@ const SellerStoreTab = () => {
                 />
             )
         }
-    ]
+    ];
 
     const tableData = products?.map((data, index) => ({
         key: index,

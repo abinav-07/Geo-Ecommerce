@@ -1,5 +1,5 @@
 const async = require("async");
-const { User, Products, ProductImages, ProductDetails, sequelize } = require("../models/index");
+const { User, Products, ProductImages, ProductDetails, OrderDetails, sequelize } = require("../models/index");
 
 const { Op } = require("sequelize");
 
@@ -23,6 +23,23 @@ const getAllCustomerDetails = async () => {
                 as: "product_details",
                 attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
             }]
+        }, {
+            model: OrderDetails,
+            attributes: ["id", "buyer_id", "seller_id", "product_id", "product_quantity", "delivered", "paid", "payment_method","createdAt"],
+            as: "order_details",
+            include: [
+                {
+                    model: Products,
+                    attributes: ["product_name"],
+                    include: [
+                        {
+                            model: User,
+                            as: "user_detail",
+                            attributes: ["first_name", "last_name", "email"]
+                        }
+                    ]
+                }
+            ]
         }]
     });
 
@@ -44,7 +61,7 @@ const deleteCustomerDetails = async (user_id) => {
                     user_id: user_id
                 }
             }, { transaction: t });
-            
+
             return deleteUser;
         });
         return response;

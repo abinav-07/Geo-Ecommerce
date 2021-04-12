@@ -54,7 +54,7 @@ const addSellerProducts = async (req, res) => {
                 }
             ], function (err, results) {
                 if (err) {
-                    res.status(400).json({message:err});
+                    res.status(400).json({ message: err });
                 } else {
                     res.status(200).send("Product Added!");
                 }
@@ -71,13 +71,23 @@ const addSellerProducts = async (req, res) => {
 const getAllSellerProducts = async (req, res) => {
     try {
         if (!req.query.user_id) {
-            res.status(401).send("Missing user_id in query.");
+            res.status(401).json({ message: "Missing user_id in query." });
         } else {
             const getAllSellerProductsData = await Products.getSellerProducts(req.query.user_id);
             res.status(200).json(getAllSellerProductsData);
         }
     } catch (err) {
         console.log(err);
+    }
+}
+
+const getAllOrderDetails = async (req, res) => {
+
+    if (req.query.user_id) {
+        const getAllOrderDetailsData = await Products.getAllOrderDetails(req.query.user_id);
+        res.status(200).send(getAllOrderDetailsData);
+    } else {
+        res.status(400).json({ message: "Missing user_id in query." });
     }
 }
 
@@ -89,17 +99,19 @@ const deleteSellerProduct = async (req, res) => {
 
     try {
         const validateResponse = schema.validate(req.body, { abortEarly: false });
-       
+
         if (validateResponse && validateResponse.error) res.status(400).send(validateResponse.error);
 
         if (!validateResponse.error) {
             const deleteProductResponse = await Products.deleteSellerProduct(req.body);
+
             if (deleteProductResponse) {
                 res.status(200).send("Product Deleted!");
             }
         }
     } catch (err) {
         console.log(err);
+        res.status(400).json({ message: "Cannot Delete" });
     };
 }
 
@@ -115,19 +127,43 @@ const updateSellerProduct = async (req, res) => {
         if (validateResponse && validateResponse.error) res.status(400).send(validateResponse.error);
 
         if (!validateResponse.error) {
-            const updateProductResponse=await Products.updateSellerProduct(req.body);
-            if(updateProductResponse){
+            const updateProductResponse = await Products.updateSellerProduct(req.body);
+            if (updateProductResponse) {
                 res.status(200).send("Product Updated!");
             }
         }
     } catch (err) {
         console.log(err);
     }
+};
+
+const updateSellerPaidDeliveredValues = async (req, res) => {
+    const schema = Joi.object({
+        order_detail_id: Joi.number().required(),
+        paidValue: Joi.boolean().required(),
+        deliveredValue: Joi.boolean().required()
+    });
+    const validateResponse = schema.validate(req.body, { abortEarly: false });
+    try {
+        if (validateResponse && validateResponse.error) res.status(400).send(validateResponse.error);
+        if (!validateResponse.error) {
+            const updateSellerPaidDeliveredResponse = await Products.updateSellerPaidDeliveredValues(req.body);
+            if (updateSellerPaidDeliveredResponse) {
+                res.status(200).send("Updated");
+            }
+
+        }
+    } catch (err) {
+        console.log(err);
+    };
+
 }
 
 module.exports = {
     addSellerProducts,
     getAllSellerProducts,
+    getAllOrderDetails,
     deleteSellerProduct,
-    updateSellerProduct
+    updateSellerProduct,
+    updateSellerPaidDeliveredValues
 }

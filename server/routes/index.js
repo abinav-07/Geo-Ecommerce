@@ -10,10 +10,10 @@ const updateUserRoutes = require("../services/user/update_user");
 const messageRoutes = require("../services/messages/chat-messages");
 const orderRoutes = require("../services/orders/user_orders");
 const userDetailRoutes = require("../services/user/user_detail");
+const chatBotRoutes = require("../services/chatBot");
+
 
 const checkJWT = require("../middlewares/jwt");
-
-
 
 //Multer Upload Directory
 var multerStorage = multer.diskStorage({
@@ -33,8 +33,10 @@ router.post("/users/register", registerRoutes.registerUser);
 //Seller Routes
 router.post("/users/add-seller-products", checkJWT, uploadDirectory.any(), sellerProductsRoutes.addSellerProducts);
 router.get("/users/get-seller-products", checkJWT, sellerProductsRoutes.getAllSellerProducts);
+router.get("/users/get-order-details", checkJWT, sellerProductsRoutes.getAllOrderDetails);
 router.post("/users/delete-seller-product", sellerProductsRoutes.deleteSellerProduct);
 router.post("/users/update-seller-product", checkJWT, sellerProductsRoutes.updateSellerProduct);
+router.post("/users/update-seller-paid-values", checkJWT, sellerProductsRoutes.updateSellerPaidDeliveredValues);
 
 //All Products
 router.get("/products/get-all-products", checkJWT, getAllProductsRoutes.getAllProducts);
@@ -47,11 +49,19 @@ router.post("/admin/delete-customer", getAllCustomerDetailsRoutes.deleteCustomer
 router.get("/users/user-details", checkJWT, userDetailRoutes.getUserDetail);
 router.post("/users/update-application-rating", checkJWT, updateUserRoutes.updateApplicationRating);
 router.get("/users/get-user-address", checkJWT, userDetailRoutes.getUserAddress);
+router.post("/users/update-profile", checkJWT, updateUserRoutes.updateUserProfile);
+router.post("/users/update-password", checkJWT, updateUserRoutes.updateUserPassword);
+router.get("/users/get-user-email", checkJWT, userDetailRoutes.getUserEmail);
 
 //Message Routes
 router.get("/users/chat-messages", checkJWT, messageRoutes.getRoomMessages);
+router.post("/users/send-message-email", checkJWT, messageRoutes.sendMessageEmail);
 
 //Order Routes
 router.post("/users/register-order", checkJWT, orderRoutes.registerOrder);
+
+//ChatBot Routes
+router.post("/chat-bot/train-model", chatBotRoutes.trainModel);
+router.post("/chat-bot/reply", chatBotRoutes.chatReply);
 
 module.exports = router;

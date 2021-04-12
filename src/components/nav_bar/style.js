@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import {Menu, Dropdown, Button} from 'antd';
-import {SearchOutlined} from '@ant-design/icons';
+import { Menu, Dropdown, Button } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
-export const NavBarDiv=styled.div`
+export const NavBarDiv = styled.div`
     z-index: 999;
     position: relative;
     width:100vw;
@@ -16,7 +16,7 @@ export const NavBarDiv=styled.div`
     }
 `
 
-export const NavBarMenu=styled(Menu)`
+export const NavBarMenu = styled(Menu)`
     display:flex;  
     justify-content:space-between;
     .nav-bar-anchor{
@@ -26,23 +26,57 @@ export const NavBarMenu=styled(Menu)`
         }
     }
 `
-export const MenuItem=styled(Menu.Item)`
+export const MenuItem = styled(Menu.Item)`
 
 `
-export const SearchOutlinedEl=styled(SearchOutlined)`
+export const SearchOutlinedEl = styled(SearchOutlined)`
     font-size:2.5rem;   
 `
 
-export const DropDownMenuDiv=styled.div`
+export const DropDownMenuDiv = styled.div`
     margin-left:-3rem;
     display:grid;
     grid-template-columns:auto auto;    
     grid-column-gap: 20px;    
     padding:10px;
     border:1px solid grey;
+`;
+
+export const MessageDropDownMenuDiv = styled.div`
+    margin-left:-10rem;    
+    padding:10px 12px;
+    border-radius:0.01rem;
+    background-color:rgb(255, 255, 255);
+    /* border:none */
+    box-shadow: 1px 2px 40px #888888;
+    width:200px;
+
+    .message-div{
+        :hover{
+            background-color:#e8e6e6;
+        }
+    }
+
+    .product-name{
+        font-size:1rem;
+        font-weight:600;
+        color:black;     
+    }
+    .message-sender{
+        margin-right:5px;
+        color:grey;
+        font-size:0.8rem;
+        
+    }
+    .message{
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        color:black;
+    }
 `
 
-export const UserDropDownMenuDiv=styled.div`
+export const UserDropDownMenuDiv = styled.div`
     margin-left:-5rem;    
     padding:10px 12px;
     border-radius:0.01rem;
@@ -60,7 +94,7 @@ export const UserDropDownMenuDiv=styled.div`
     }
 `
 
-export const LogoutButton=styled(Button)`
+export const LogoutButton = styled(Button)`
     border:none;
     padding-left:0px;
     font-weight:600;

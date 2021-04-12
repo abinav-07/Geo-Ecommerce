@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
@@ -25,6 +25,10 @@ const ChatPage = () => {
     const history = useHistory();
     const [userId, setUserId] = useState('');
     const [currentUserId, setCurrentUserId] = useState();
+    const [currentBuyerEmail, setCurrentBuyerEmail] = useState();
+    const [currentSellerEmail, setCurrentSellerEmail] = useState();
+    const [currentBuyerName, setCurrentBuyerName] = useState();
+    const [currentSellerName, setCurrentSellerName] = useState();
     const [productId, setProductId] = useState('');
     const [sellerId, setSellerId] = useState('');
     const [message, setMessage] = useState();
@@ -32,12 +36,20 @@ const ChatPage = () => {
     const [room, setRoom] = useState();
     const [isUserOnline, setIsUserOnline] = useState(false);
 
-    const current_user_id = useSelector(state => state?.user?.user?.user_id)
+    const current_user_id = useSelector(state => state?.user?.user?.user_id);
+    const current_user_email = useSelector(state => state?.user?.user?.email);
 
+    const scrollElement = useRef(null);
+
+    useEffect(() => {
+        scrollElement.current.scrollIntoView({
+            behavior: "smooth"
+        })
+    });
 
     useEffect(() => {
         setCurrentUserId(current_user_id);
-    }, [current_user_id])
+    }, [current_user_id]);
 
     useEffect(() => {
         const { user_id, product_id, seller_id } = queryString.parse(history.location.search);
@@ -74,7 +86,6 @@ const ChatPage = () => {
                 })
             })
             .catch(err => {
-                console.log(err);
                 notification.error({
                     message: err.response?.data,
                     duration: 3
@@ -90,6 +101,20 @@ const ChatPage = () => {
     }, []);
 
     useEffect(() => {
+
+        axios.get(`${API_URL}/users/get-user-email?user_id=${userId}`).then(res => {
+            setCurrentBuyerEmail(res.data?.email);
+            setCurrentBuyerName(res.data?.first_name);
+        }).catch(err => {
+            console.log(err.response?.data?.message);
+        });
+
+        axios.get(`${API_URL}/users/get-user-email?user_id=${sellerId}`).then(res => {
+            setCurrentSellerEmail(res.data?.email);
+            setCurrentSellerName(res.data?.first_name);
+        }).catch(err => {
+            console.log(err.response?.data?.message);
+        });
 
 
         //Seller Id to check if seller is online
@@ -119,6 +144,37 @@ const ChatPage = () => {
         setMessages(messages => [...messages, { user_id: currentUserId, text: message }])
         if (message) {
             socket.emit('privateMsg', { room, currentUserId, sellerId, productId, message }, () => setMessage(""));
+
+            if (!isUserOnline) {
+                let values;
+                if (currentUserId == userId) {
+                    //Sender is Buyer
+                    //Receiver is Seller
+                    values = {
+                        senderEmail: `${currentBuyerName} <${currentBuyerEmail}>`,
+                        receiverEmail: currentSellerEmail,
+                        message: message
+                    }
+                } else {
+                    //Receiver is Buyer
+                    //Sender is Seller
+                    values = {
+                        senderEmail: `${currentSellerName} <${currentSellerEmail}>`,
+                        receiverEmail: currentBuyerEmail,
+                        message: message
+                    }
+                }
+
+                axios.post(`${API_URL}/users/send-message-email`, values)
+                    .then(res => {
+                        notification.info({
+                            message: "Message Emailed",
+                            duration: 2
+                        })
+                    }).catch(err => {
+                        console.log(err);
+                    });
+            }
         }
     }
 
@@ -135,8 +191,10 @@ const ChatPage = () => {
                 <ChatBoxDiv>
                     <ActiveInfoBar isUserOnline={isUserOnline} currentUserId={currentUserId} userId={userId} />
                     <Messages messages={messages} />
+                    <div style={{ float: "left", clear: "both" }} ref={scrollElement} />
                     <div className="input-text-field">
                         <Input
+                            placeholder="Enter Message Here..."
                             value={message}
                             onChange={(event) => setMessage(event.target.value)}
                             onKeyPress={(event) => event.key === "Enter" ? sendMessage(event) : null}

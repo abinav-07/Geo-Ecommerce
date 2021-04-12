@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            MessageRooms.hasMany(models.PrivateMessages, { foreignKey: "room_id", as: "messages" });            
+            MessageRooms.hasMany(models.PrivateMessages, { foreignKey: "room_id", as: "messages", onDelete: "CASCADE" });
+            MessageRooms.belongsTo(models.Products, { foreignKey: "product_id" })
         }
     };
     MessageRooms.init({

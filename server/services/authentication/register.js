@@ -36,7 +36,7 @@ const registerUser = async (req, res) => {
             if (response.email) {
                 res.status(400).json({ message: "User Already Registered" });
             } else {
-             
+
                 const registerResponse = await Users.registerGoogleUser(req.body);
 
                 const payload = {
@@ -45,6 +45,7 @@ const registerUser = async (req, res) => {
                     last_name: registerResponse.last_name,
                     email: registerResponse.email,
                     google_id: registerResponse.google_id,
+                    total_expenditure: registerResponse.total_expenditure,
                     application_rating: registerResponse.application_rating,
                     address: registerResponse.address
                 }
@@ -99,6 +100,7 @@ const registerUser = async (req, res) => {
                     last_name: registerResponse.last_name,
                     email: registerResponse.email,
                     google_id: registerResponse.google_id,
+                    total_expenditure: registerResponse.total_expenditure,
                     application_rating: registerResponse.application_rating,
                     address: registerResponse.address
                 }

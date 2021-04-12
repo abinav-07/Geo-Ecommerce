@@ -7,6 +7,9 @@ import {
     GET_ALL_SELLER_PRODUCTS,
     GET_ALL_SELLER_PRODUCTS_SUCCESS,
     GET_ALL_SELLER_PRODUCTS_ERROR,
+    GET_ALL_ORDER_DETAILS,
+    GET_ALL_ORDER_DETAILS_SUCCESS,
+    GET_ALL_ORDER_DETAILS_ERROR,
     DELETE_SELLER_PRODUCT,
     DELETE_SELLER_PRODUCT_SUCCESS,
     DELETE_SELLER_PRODUCT_ERROR,
@@ -62,6 +65,26 @@ const onGetAllSellerProductsSuccess = (data) => {
 const onGetAllSellerProductsError = (data) => {
     return {
         type: GET_ALL_SELLER_PRODUCTS_ERROR,
+        payload: data
+    }
+}
+
+const onGetAllOrderDetails = () => {
+    return {
+        type: GET_ALL_ORDER_DETAILS
+    }
+}
+
+const onGetAllOrderDetailsSuccess = (data) => {
+    return {
+        type: GET_ALL_ORDER_DETAILS_SUCCESS,
+        payload: data
+    }
+}
+
+const onGetAllOrderDetailsError = (data) => {
+    return {
+        type: GET_ALL_ORDER_DETAILS_ERROR,
         payload: data
     }
 }
@@ -142,9 +165,25 @@ export const getAllSellerProducts = (user_id) => {
         axios.get(`${API_URL}/users/get-seller-products?user_id=${user_id}`)
             .then(res => {
                 dispatch(onGetAllSellerProductsSuccess(res.data));
-            }).catch(err => {               
+            }).catch(err => {
+                console.log(err.response);
                 dispatch(onGetAllSellerProductsError(err.response.data.message));
             });
+    }
+}
+
+export const getAllOrderDetails = (user_id) => {
+    return (dispatch) => {
+        dispatch(onGetAllOrderDetails());
+        axios.get(`${API_URL}/users/get-order-details?user_id=${user_id}`)
+            .then(res => {
+                console.log(res);
+                dispatch(onGetAllOrderDetailsSuccess(res.data));
+            })
+            .catch(err => {
+                console.log(err.response);
+                dispatch(onGetAllOrderDetailsError(err.response.data.message));
+            })
     }
 }
 
@@ -152,10 +191,9 @@ export const deleteSellerProduct = (value) => {
     return (dispatch) => {
         dispatch(onDeleteSellerProduct());
         axios.post(`${API_URL}/users/delete-seller-product`, value)
-            .then(res => {                
+            .then(res => {
                 dispatch(onDeleteSellerProductSuccess(res.data));
             }).catch(err => {
-                console.log(err.response);
                 if (err.response.data.details) {
                     dispatch(onDeleteSellerProductError(err.response.data.details[0]["message"]));
                 } else {
@@ -168,8 +206,8 @@ export const deleteSellerProduct = (value) => {
 export const updateSellerProduct = (value) => {
     return (dispatch) => {
         dispatch(onUpdateSellerProduct());
-        axios.post(`${API_URL}/users/update-seller-product`,value )
-            .then(res => {                
+        axios.post(`${API_URL}/users/update-seller-product`, value)
+            .then(res => {
                 dispatch(onUpdateSellerProductSuccess(res.data));
             }).catch(err => {
                 console.log(err);

@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
 
       User.hasOne(models.Address, { sourceKey: "address_id", foreignKey: "id", as: "address" });
 
-      User.hasMany(models.MessageRooms, { foreignKey: "user_id"});
-      User.hasMany(models.MessageRooms, { foreignKey: "seller_id"});
+      User.hasMany(models.MessageRooms, { foreignKey: "user_id" });
+      User.hasMany(models.MessageRooms, { foreignKey: "seller_id" });
       // Address.belongsTo(models.User, {targetKey:"address_id",foreignKey: "address_id", as: "address" });
     }
   };
@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.TEXT,
     google_id: DataTypes.TEXT,
     application_rating: DataTypes.STRING,
-    address_id: DataTypes.INTEGER
+    address_id: DataTypes.INTEGER,
+    total_expenditure: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

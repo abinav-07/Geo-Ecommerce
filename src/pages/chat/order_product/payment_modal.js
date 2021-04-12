@@ -20,7 +20,7 @@ const PaymentModal = ({
     const dispatch = useDispatch();
     const [registerOrderError, setRegisterOrderError] = useState(null);
     const [currentUserAddress, setCurrentUserAddress] = useState(null);
-    const [inputValue, setInputValue] = useState(null);
+    const [inputValue, setInputValue] = useState(1);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [sellerAddress, setSellerAddress] = useState(null);
     const [registerOrderMessage, setRegisterOrderMessage] = useState(null);
@@ -131,7 +131,7 @@ const PaymentModal = ({
                 user_id: currentUserId,
                 seller_id: sellerId,
                 product_id: product?.product_id,
-                product_price: product?.product_price,
+                product_price: product?.product_price * inputValue,
                 current_user_address: currentUserAddress,
                 seller_address: sellerAddress,
                 delivered: false,
@@ -161,7 +161,7 @@ const PaymentModal = ({
                     user_id: currentUserId,
                     seller_id: sellerId,
                     product_id: product?.product_id,
-                    product_price: product?.product_price,
+                    product_price: product?.product_price * inputValue,
                     current_user_address: currentUserAddress,
                     seller_address: sellerAddress,
                     delivered: false,
@@ -202,7 +202,8 @@ const PaymentModal = ({
 
             //Display Khalti Modal
             //Khalti Takes payment in paisa
-            checkout.show({ amount: (product?.product_price * 100) });
+            //Dollar into Rupees
+            checkout.show({ amount: (product?.product_price * 100 * 100 * inputValue) });
 
             $("#cash-in-hand-img").css({
                 border: "1px solid black"
@@ -245,7 +246,6 @@ const PaymentModal = ({
                 <Row justify="center" style={{ textAlign: "center" }}>
                     <Col md={12}
                         xs={24}
-
                     >
                         <PaymentTypeDiv
                             onClick={() => {

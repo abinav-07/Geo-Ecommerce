@@ -41,11 +41,20 @@ const loginUser = async (req, res) => {
                         email: userResponse.email,
                         google_id: userResponse.google_id,
                         application_rating: userResponse.application_rating,
+                        total_expenditure:userResponse.total_expenditure,
                         order_details: userResponse.order_details,
                         address: userResponse.address
                     }
 
-                    var token = jwt.sign({ user: payload }, jwtSecretKey);
+                    const jwtPayload={
+                        user_id: userResponse.user_id,
+                        first_name: userResponse.first_name,
+                        last_name: userResponse.last_name,
+                        email: userResponse.email,
+                        google_id: userResponse.google_id,
+                    }
+
+                    var token = jwt.sign({ user: jwtPayload }, jwtSecretKey);
 
                     res.status(200).send({
                         user: payload,
@@ -86,12 +95,21 @@ const loginUser = async (req, res) => {
                         last_name: userResponse.last_name,
                         email: userResponse.email,
                         google_id: userResponse.google_id,
+                        total_expenditure:userResponse.total_expenditure,
                         application_rating: userResponse.application_rating,
                         order_details: userResponse.order_details,
                         address: userResponse.address
                     }
 
-                    var token = jwt.sign({ user: payload }, jwtSecretKey);
+                    const jwtPayload={
+                        user_id: userResponse.user_id,
+                        first_name: userResponse.first_name,
+                        last_name: userResponse.last_name,
+                        email: userResponse.email,
+                        google_id: userResponse.google_id,
+                    }
+
+                    var token = jwt.sign({ user: jwtPayload }, jwtSecretKey);
 
                     res.status(200).send({
                         user: payload,

@@ -19,19 +19,20 @@ const AdminCustomerPage = () => {
     const deletingCustomerBool = useSelector(state => state.adminCustomerDetails?.deletingCustomer);
     const deletingCustomerSuccess = useSelector(state => state.adminCustomerDetails?.deletingCustomerSuccess);
     const deletingCustomerError = useSelector(state => state.adminCustomerDetails?.deletingCustomerError);
+    const deletingSellerProductSuccess = useSelector(state => state.addSellerProducts?.deletingSellerProductSuccess);
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteModalInput, setDeleteModalInput] = useState("");
     const [userIdToDelete, setUserIdToDelete] = useState(null);
     const [userNameToDelete, setUserNameToDelete] = useState(null);
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(onDeletingCustomerReset());
     });
 
     useEffect(() => {
         dispatch(getAllCustomerDetails());
-    }, [deletingCustomerSuccess]);
+    }, [deletingCustomerSuccess, deletingSellerProductSuccess]);
 
     useEffect(() => {
         gettingAllCustomerDetailsError &&

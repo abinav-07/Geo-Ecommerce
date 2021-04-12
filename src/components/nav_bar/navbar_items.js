@@ -66,11 +66,11 @@ export const NavbarItems = [
         label: "Sell Your Products",
         path: SELL_YOUR_PRODUCTS
     },
-    {
-        name: "Contact",
-        label: "Contact",
-        path: "/contact"
-    }
+    // {
+    //     name: "Contact",
+    //     label: "Contact",
+    //     path: "/contact"
+    // }
 ]
 
 export const UserProfileItems = [

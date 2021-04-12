@@ -11,13 +11,14 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            PrivateMessages.belongsTo(models.User, { foreignKey: "user_id" })
         }
     };
-    PrivateMessages.init({    
+    PrivateMessages.init({
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         user_id: DataTypes.INTEGER,
-        message: DataTypes.TEXT,  
-        room_id: DataTypes.INTEGER,        
+        message: DataTypes.TEXT,
+        room_id: DataTypes.INTEGER,
     }, {
         sequelize,
         modelName: 'PrivateMessages',

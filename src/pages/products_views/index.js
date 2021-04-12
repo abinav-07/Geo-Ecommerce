@@ -45,7 +45,7 @@ const ProductsPage = () => {
 
         //Adding Time Distance
         for (let i = 0; i < allProducts?.length; i++) {
-            
+
             let productLat = allProducts ? allProducts[i]["user_detail"]["address"]["latitude"] : null;
             let productLong = allProducts ? allProducts[i]["user_detail"]["address"]["longitude"] : null;
             const distance = getLatLongDistance(productLat, productLong, user_latitude, user_longitude);

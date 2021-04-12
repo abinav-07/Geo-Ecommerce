@@ -1,7 +1,7 @@
 const { User, Address, Products, OrderDetails, PrivateMessages, MessageRooms, sequelize } = require("../models/index");
 const bcrypt = require("bcrypt");
 
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 const getUserAllDetails = async (user_id) => {
     const response = await sequelize.transaction(async (t) => {
@@ -9,7 +9,7 @@ const getUserAllDetails = async (user_id) => {
             where: {
                 user_id: user_id
             },
-            attributes: ['user_id', `first_name`, `last_name`, `email`, `google_id`, `address_id`, `application_rating`, `createdAt`, `updatedAt`],
+            attributes: ['user_id', `first_name`, `last_name`, `email`, `total_expenditure`, `google_id`, `address_id`, `application_rating`, `createdAt`, `updatedAt`],
             include: [
                 {
                     model: OrderDetails,
@@ -53,8 +53,13 @@ const getUserAllDetails = async (user_id) => {
                 include: [{
                     model: PrivateMessages,
                     as: "messages",
-                    required: true
+                    required: true,
+                    include: [{
+                        model: User,
+                    }]
 
+                }, {
+                    model: Products
                 }]
             });
 
@@ -67,6 +72,14 @@ const getUserAllDetails = async (user_id) => {
     return response;
 };
 
+const getUserEmail = async (user_id) => {
+    const response = await User.findOne({
+        where: { user_id: user_id }
+    });
+
+    return response;
+}
+
 const getUserByEmail = async (email) => {
 
     const response = await sequelize.transaction(async (t) => {
@@ -74,7 +87,7 @@ const getUserByEmail = async (email) => {
             where: {
                 email: email
             },
-            attributes: ['user_id', `first_name`, `last_name`, `email`, `password`, `google_id`, `address_id`, `application_rating`, `createdAt`, `updatedAt`],
+            attributes: ['user_id', `first_name`, `last_name`, `email`, `total_expenditure`, `password`, `google_id`, `address_id`, `application_rating`, `createdAt`, `updatedAt`],
             include: [
                 {
                     model: OrderDetails,
@@ -117,7 +130,6 @@ const getUserAddress = async (user_id) => {
 };
 
 const registerUser = async (userObj) => {
-    //console.log(User.users.fi);
 
     const hashPassword = bcrypt.hashSync(userObj.password, 2);
 
@@ -218,6 +230,8 @@ const registerOrder = async (values) => {
                 }
             });
 
+            await sequelize.query(`UPDATE users SET total_expenditure=total_expenditure+${values.product_price} where user_id=${values.user_id}`);
+
             return "Order Registered";
         } else {
             return "Order Could Not Register";
@@ -228,6 +242,29 @@ const registerOrder = async (values) => {
     }
 };
 
+const updateUserProfile = async (values) => {
+    const response = await User.update({
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email
+    }, {
+        where: { user_id: values.user_id }
+    });
+
+    return response;
+}
+
+const updateUserPassword = async (values) => {
+    const hashPassword = bcrypt.hashSync(values.newPassword, 2);
+    const response = User.update({
+        password: hashPassword
+    }, {
+        where: { user_id: values.user_id }
+    });
+
+    return response;
+}
+
 module.exports = {
     getUserAllDetails,
     getUserByEmail,
@@ -235,5 +272,8 @@ module.exports = {
     registerGoogleUser,
     updateApplicationRating,
     getUserAddress,
-    registerOrder
+    registerOrder,
+    updateUserProfile,
+    updateUserPassword,
+    getUserEmail
 }

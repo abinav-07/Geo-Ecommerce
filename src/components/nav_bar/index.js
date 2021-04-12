@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import SearchBar from './search_bar';
 import RatingComponent from './rating_component';
+import MessageDropDown from './message_dropdown';
 import { NavBarDiv, NavBarMenu, MenuItem, DropDownMenuDiv, UserDropDownMenuDiv, LogoutButton } from './style';
 import { Row, Col, Dropdown, Divider, Image, Input } from 'antd';
 import { DownOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons'
@@ -12,6 +13,7 @@ import { Fragment } from 'react';
 import { logoutUser } from '../../redux';
 import 'font-awesome/css/font-awesome.min.css';
 import logo from '../../assests/images/logo.png';
+import { get } from 'jquery';
 
 const Navbar = ({ displaySearchBar }) => {
     const history = useHistory();
@@ -57,6 +59,15 @@ const Navbar = ({ displaySearchBar }) => {
                 <Row className="userMenuLabel userMenuEmail">
                     <p>{User?.email}</p>
                 </Row>
+                <Row className="userMenuLabel">
+                    <Link to="/profile">
+                        <h4><UserOutlined style={{
+                            fontSize: "1rem",
+                            marginRight: "0.5rem"
+                        }} /><b>Your Profile</b></h4>
+                    </Link>
+
+                </Row>
                 <Divider style={{ margin: "2px 0px" }} />
                 <Row>
                     <LogoutButton
@@ -70,7 +81,8 @@ const Navbar = ({ displaySearchBar }) => {
                 </Row>
             </UserDropDownMenuDiv>
         )
-    }
+    };
+
 
     //Return Main Component
     return (
@@ -174,6 +186,17 @@ const Navbar = ({ displaySearchBar }) => {
                     style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", zIndex: "999", padding: "1rem", textAlign: "center" }}
                 >
                     <RatingComponent />
+
+                    {/* To display messages or not */}
+                    {getToken() ?
+                        (
+                            <MessageDropDown />
+                        ) :
+                        ""
+                    }
+
+
+                    {/* To display Profile Icon or signup/register icon */}
                     {getToken() ?
                         (
                             UserProfileItems.map(({ name, label }) => {

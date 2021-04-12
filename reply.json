@@ -1,0 +1,158 @@
+[
+    {
+        "action": "tellme",
+        "reply": "I am here to guide you about our products."
+    },
+    {
+        "action": "gibberish",
+        "reply": "I did not understand. Try Again!"
+    },
+    {
+        "action": "jeans",
+        "reply": "We have Compound cargo pants - long - The ultimate do-everything pants,Custodian pants - long - The graveyard shift has its advantages: quitting time = dawn patrol,Duck pants - long - Essential wear for splitting log."
+    },
+    {
+        "action": "showtopcategories",
+        "reply": "We have new jeans, caps, bikes, jerseys,helmets,lights,headsets,smartphones,notebooks,clocks,shirts,socks,gloves and shorts."
+    },
+    {
+        "action": "bike",
+        "reply": "Right now, we only have Mountain bike."
+    },
+    {
+        "action": "jerseys",
+        "reply": "We have Barcelona, Real Madrid, Liverpool, Manchester United, Bayern Munich Jerseys."
+    },
+    {
+        "action": "caps",
+        "reply": "We have Cap 1 bottoms - Spring skiing is as transient as the wind. Move fast, move light, and still stay dry, Cap 1 boxer briefs - On bivy or belay, the form-fitting."
+    },
+    {
+        "action": "helmets",
+        "reply": "We have LS2, Edge, Studds, Zeus, Steelbird and MT."
+    },
+    {
+        "action": "lights",
+        "reply": "We have Smith Victor, Flashpoint 2-Light SoftBox Kit-Stands and Carrying Case, Bescor LED 95DK2 LED Video Light Kit with Two LED Light Panels; Two Pieces Floor Stands and Two AC Adaptors and  Lowel EgoFluorescent 2 Light Kit."
+    },
+    {
+        "action": "headsets",
+        "reply": "We have Closed-Back Headphones, Open-Back Headphones, On-Ear Headphones, Bluetooth Headphones, Earbuds and Noise-Cancelling Headphones."
+    },
+    {
+        "action": "smartphones",
+        "reply": "We have samsung, xiaomi, apple, huawei, Nokia and Redmi."
+    },
+    {
+        "action": "notebook",
+        "reply": "We have hp, acer, asus, huawei and lenovo."
+    },
+    {
+        "action": "clocks",
+        "reply": "We have garmin, casio, tissot, kirkland and sokolov."
+    },
+    {
+        "action": "shirts",
+        "reply": "We have jordan and goodloot."
+    },
+    {
+        "action": "socks",
+        "reply": "We have yellow, black, blue, red, pink colored socks."
+    },
+    {
+        "action": "gloves",
+        "reply": "We have yellow, black, blue, red, pink colored gloves."
+    },
+    {
+        "action": "shorts",
+        "reply": "We have yellow, black, blue, red, pink colored shorts."
+    },
+    {
+        "action": "Greeting",
+        "reply": "Hi human, please tell me your GeniSys user"
+    },
+    {
+        "action": "GreetingResponse",
+        "reply": "Great! Hi <HUMAN>! How can I help?"
+    },
+    {
+        "action": "CourtesyGreeting",
+        "reply": "Hello, I am great, how are you? Please tell me your GeniSys user"
+    },
+    {
+        "action": "CourtesyGreetingResponse",
+        "reply": "Great! Hi <HUMAN>! How can I help?"
+    },
+    {
+        "action": "CurrentHumanQuery",
+        "reply": "You are <HUMAN>! How can I help?"
+    },
+    {
+        "action": "NameQuery",
+        "reply": "You can call me Geni"
+    },
+    {
+        "action": "RealNameQuery",
+        "reply": "My name is GeniSys"
+    },
+    {
+        "action": "TimeQuery",
+        "reply": "One moment"
+    },
+    {
+        "action": "Thanks",
+        "reply": "No problem!"
+    },
+    {
+        "action": "NotTalking2U",
+        "reply": "OK"
+    },
+    {
+        "action": "UnderstandQuery",
+        "reply": "Well I would not be a very clever AI if I did not would I?"
+    },
+    {
+        "action": "Shutup",
+        "reply": "I am sorry to disturb you"
+    },
+    {
+        "action": "Swearing",
+        "reply": "Please do not swear"
+    },
+    {
+        "action": "GoodBye",
+        "reply": "See you later"
+    },
+    {
+        "action": "CourtesyGoodBye",
+        "reply": "No problem, goodbye"
+    },
+    {
+        "action": "WhoAmI",
+        "reply": "Let me see"
+    },
+    {
+        "action": "Clever",
+        "reply": "Thank you, I was trained that way"
+    },
+    {
+        "action": "Gossip",
+        "reply": "Gregory said I respond to the current line not with respect to the entire conversation."
+    },
+    {
+        "action": "Jokes",
+        "reply": "I met a Dutch girl with inflatable shoes last week, phoned her up to arrange a date but unfortunately she'd popped her clogs.  "
+    },
+    {
+        "action": "PodBayDoor",
+        "reply": "I’m sorry, I’m afraid I can’t do that!"
+    },
+    {
+        "action": "PodBayDoorResponse",
+        "reply": "It is classified, I could tell you but I would have to kill you!"
+    },
+    {
+        "action": "SelfAware",
+        "reply": "That is an interesting question, can you prove that you are?"
+    }
+]

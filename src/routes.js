@@ -4,12 +4,14 @@ import AdminLayout from './layout/admin_layout';
 import LoginUserPage from './pages/login';
 import RegisterUserPage from './pages/register';
 import LandingPage from './pages/landing';
+import UserProfile from './pages/user_profile';
 import SellYourProductsPage from './pages/sell_your_products';
 import ProductsPage from './pages/products_views';
 import ChatPage from './pages/chat';
 import LoginAdminPage from './pages/admin/login';
 import AdminCustomerPage from './pages/admin/customer';
 import AdminCustomerProductDetails from './pages/admin/customer/customer_products_details';
+import AdminOrdersPage from './pages/admin/orders';
 import AdminRatingsPage from './pages/admin/ratings';
 
 //Route Enums
@@ -47,6 +49,16 @@ const Routes = [
         layout: ConditionalLayout,
         component: LandingPage,
 
+    },
+    {
+        name: "User Profile",
+        path: "/profile",
+        privateRoute: true,
+        adminRoute: false,
+        exact: true,
+        displaySearchBar: false,
+        layout: ConditionalLayout,
+        component: UserProfile
     },
     {
         name: "Sell Your Products Page",
@@ -108,6 +120,16 @@ const Routes = [
         displaySearchBar: false,
         layout: AdminLayout,
         component: AdminCustomerProductDetails
+    },
+    {
+        name: "Admin Orders Page",
+        path: `/admin/${ADMIN_NAV_BAR_KEYS.ORDERS_DETAILS}`,
+        privateRoute: true,
+        adminRoute: true,
+        exact: true,
+        displaySearchBar: false,
+        layout: AdminLayout,
+        component: AdminOrdersPage
     },
     {
         name: "Admin Ratings Page",

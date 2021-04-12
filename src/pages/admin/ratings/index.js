@@ -43,7 +43,7 @@ const AdminRatingsPage = () => {
             }
         });
         setTotalRaters(totalRaters);
-        setTotalRating(totalRates / totalRaters);
+        setTotalRating((totalRates / totalRaters).toFixed(1));
 
     }, [allCustomerDetails]);
 

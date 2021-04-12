@@ -6,6 +6,9 @@ import {
     GET_ALL_SELLER_PRODUCTS,
     GET_ALL_SELLER_PRODUCTS_SUCCESS,
     GET_ALL_SELLER_PRODUCTS_ERROR,
+    GET_ALL_ORDER_DETAILS,
+    GET_ALL_ORDER_DETAILS_SUCCESS,
+    GET_ALL_ORDER_DETAILS_ERROR,
     DELETE_SELLER_PRODUCT,
     DELETE_SELLER_PRODUCT_SUCCESS,
     DELETE_SELLER_PRODUCT_ERROR,
@@ -36,9 +39,15 @@ const initialState = {
 }
 
 const sellerAllProductsInitialState = {
+    //Getting Seller All Products State
     gettingAllSellerProducts: false,
     allSellerProducts: null,
-    gettingAllSellerProductsError: null
+    gettingAllSellerProductsError: null,
+
+    //Getting Seller All Order Details State
+    gettingAllOrderDetails: false,
+    allOrderDetails: null,
+    gettingAllOrderDetailsError: null,
 }
 
 const addingSellerProductsReducer = (state = initialState, action) => {
@@ -98,6 +107,34 @@ const getSellerAllProductsReducer = (state = sellerAllProductsInitialState, acti
                 gettingAllSellerProducts: false,
                 allSellerProducts: null,
                 gettingAllSellerProductsError: action.payload
+            }
+        default:
+            return state;
+    }
+}
+
+const getSellerAllOrderDetailsReducer = (state = sellerAllProductsInitialState, action) => {
+    switch (action.type) {
+        case GET_ALL_ORDER_DETAILS:
+            return {
+                ...state,
+                gettingAllOrderDetails: true,
+                allOrderDetails: null,
+                gettingAllOrderDetailsError: null
+            };
+        case GET_ALL_ORDER_DETAILS_SUCCESS:
+            return {
+                ...state,
+                gettingAllOrderDetails: false,
+                allOrderDetails: action.payload,
+                gettingAllOrderDetailsError: null
+            }
+        case GET_ALL_ORDER_DETAILS_ERROR:
+            return {
+                ...state,
+                gettingAllOrderDetails: false,
+                allOrderDetails: null,
+                gettingAllOrderDetailsError: action.payload
             }
         default:
             return state;
@@ -174,4 +211,4 @@ const updateSellerProductReducer = (state = initialState, action) => {
 }
 
 export const reducer = reduceReducers(addingSellerProductsReducer, deleteSellerProductReducer, updateSellerProductReducer);
-export const sellerAllProductsReducer = getSellerAllProductsReducer;
+export const sellerAllProductsReducer = reduceReducers(getSellerAllProductsReducer, getSellerAllOrderDetailsReducer);

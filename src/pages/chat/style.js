@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ChatDiv=styled.div`
+export const ChatDiv = styled.div`
     position:relative;    
     width:calc(100%);
     max-width:800px;
@@ -12,7 +12,7 @@ export const ChatBoxDiv = styled.div`
     height:600px;
     border-radius:4px;           
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
+    overflow: auto;
     .input-text-field{
         display:flex;
         flex-direction:row;

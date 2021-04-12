@@ -10,6 +10,7 @@ import ReactRotatingText from 'react-rotating-text';
 
 import HowSamanWorksDiv from './components/how_saman_works_info';
 import BuySellInformation from './components/buy_sell_info';
+import ChatBot from './components/chat_bot/chat-bot';
 
 const LandingPage = () => {
 
@@ -64,21 +65,21 @@ const LandingPage = () => {
 
     //Color Animation     
     useEffect(() => {
-        const animationInterval=setInterval(animateColor, 4000);
-        return ()=>clearInterval(animationInterval);
+        const animationInterval = setInterval(animateColor, 4000);
+        return () => clearInterval(animationInterval);
     }, []);
 
-    let colorIndex = 0;       
-    
-    const animateColor = () => {                    
-        for(var i=0;i<animationColors.length;i++){
-            if(i==colorIndex)setAnimationColor(animationColors[colorIndex]);
+    let colorIndex = 0;
+
+    const animateColor = () => {
+        for (var i = 0; i < animationColors.length; i++) {
+            if (i == colorIndex) setAnimationColor(animationColors[colorIndex]);
         }
-        
+
         colorIndex++;
 
-        if(colorIndex>animationColors.length-1){
-            colorIndex=0;
+        if (colorIndex > animationColors.length - 1) {
+            colorIndex = 0;
         }
     };
 
@@ -88,7 +89,7 @@ const LandingPage = () => {
         let onePixelDegree = 1 / oneDegreePixelValue;
 
         let degreesToRotate = totalDegreesToRotate;
-        let marginToDecrease = window.scrollY * onePixelDegree;        
+        let marginToDecrease = window.scrollY * onePixelDegree;
         $("#landingRightBackgroundDiv").css({
             "right": `-${marginToDecrease * 1.2}%`
         });
@@ -153,11 +154,11 @@ const LandingPage = () => {
                                 </div> */}
 
                             </LandingRightColumn>
-
                         </Col>
                     </Row>
-                    <BuySellInformation animatedbackgroundColor={animationColor}/>
+                    <BuySellInformation animatedbackgroundColor={animationColor} />
                     <HowSamanWorksDiv />
+                    <ChatBot />
                 </Content>
             </Layout>
 
