@@ -4,21 +4,29 @@ import { SearchOutlined } from '@ant-design/icons';
 
 export const NavBarDiv = styled.div`
     z-index: 999;
-    position: relative;
+    position: fixed;
     width:100vw;
     justify-content:center;
     background-color:rgba(255,255,255,0.2);    
     perspective:1000px;
     margin:0 auto;
- 
+    font-weight:bold;
+    top:0;
+    transition: top 0.3s;
     #searchInput{
         display:none;
     }
+    
+    @media only screen and (max-width: 900px) {
+        position:relative;
+    }
+
 `
 
 export const NavBarMenu = styled(Menu)`
     display:flex;  
     justify-content:space-between;
+    background-color:rgba(255,255,255,0.2);    
     .nav-bar-anchor{
         color:black;
         &:active{
@@ -27,7 +35,9 @@ export const NavBarMenu = styled(Menu)`
     }
 `
 export const MenuItem = styled(Menu.Item)`
-
+    h3{
+        font-weight:bold;
+    }
 `
 export const SearchOutlinedEl = styled(SearchOutlined)`
     font-size:2.5rem;   
@@ -35,6 +45,7 @@ export const SearchOutlinedEl = styled(SearchOutlined)`
 
 export const DropDownMenuDiv = styled.div`
     margin-left:-3rem;
+    background-color:white;
     display:grid;
     grid-template-columns:auto auto;    
     grid-column-gap: 20px;    

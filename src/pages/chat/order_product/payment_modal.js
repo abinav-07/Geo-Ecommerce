@@ -123,7 +123,7 @@ const PaymentModal = ({
 
     const checkout = new KhaltiCheckout(khaltiConfig);
 
-    const registerOrder = () => {
+    const registerOrder = () => {        
         if (paymentMethod == "cash_in_hand") {
             const values = {
                 product_quantity: inputValue,
@@ -186,6 +186,11 @@ const PaymentModal = ({
                     duration: 3
                 })
             }
+        }else{
+            notification.error({
+                message:"Please select payment method!",
+                duration:3
+            })
         }
     };
 
@@ -219,7 +224,7 @@ const PaymentModal = ({
             centered
             visible={openModalBool}
             width={900}
-            onCancel={() => { setOpenModalBool(false) }}
+            onCancel={() => { setOpenModalBool(false);}}
             maskClosable={false}
             footer={[
                 <div>

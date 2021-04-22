@@ -2,15 +2,15 @@ const MessageQueries = require("../../queries/message");
 const nodemailer = require("nodemailer");
 
 let nodemaielrTransporter = nodemailer.createTransport({
-    // host: "smtp.gmail.com",
+    
     //samanorganiz
 
     service: 'gmail',
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-        user: "abighimire07@gmail.com",
-        pass: "",
+        user: "abighimire04@gmail.com",
+        pass: "Huhu.com",
     },
 })
 

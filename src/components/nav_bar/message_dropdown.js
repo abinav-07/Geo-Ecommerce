@@ -34,7 +34,7 @@ const MessageDropDown = () => {
                                             target="_blank"
                                         >
                                             <div>
-                                                <span className="product-name">{data?.Product?.["product_name"]}</span>
+                                                <span style={{color:"grey"}}>Product: </span><span className="product-name">{data?.Product?.["product_name"]}</span>
                                             </div>
                                             <div style={{ display: "flex" }}>
                                                 <span className="message-sender">

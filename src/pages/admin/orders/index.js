@@ -81,8 +81,7 @@ const AdminOrdersPage = () => {
                     title: "Delivered",
                     dataIndex: "delivered",
                     key: "delivered",
-                    render: (text, record, index) => {
-                        console.log(record)
+                    render: (text, record, index) => {                        
                         return (
                             record?.delivered ?
                                 <span style={{ color: "green" }}>Delivered</span>

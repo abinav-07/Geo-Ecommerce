@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const PageLayout = styled.div`
     background-image:linear-gradient(#fac950,#ebe07f);
-    margin:50px 200px;
+    margin:150px 200px;
     padding:5px;
     /* height:100vh; */
     border-radius:2rem;
@@ -90,9 +90,13 @@ export const CardDiv = styled(Card)`
     }
 `
 
-export const ProductModalDiv=styled(Modal)`
+export const ProductModalDiv = styled(Modal)`
+max-height:650px;
 #product_name{
     font-family:cursive;
+}
+.image-gallery-image{
+    height:50vh;
 }
 ul{
     padding-inline-start:20px;
@@ -102,5 +106,19 @@ li{
 }
 h4{
     font-weight:600;
+}
+.description-divs{
+    min-height:30px;
+    max-height:100px;
+    overflow-y:scroll;
+    margin-bottom:5px;
+}
+.review-ul{
+    li{
+        list-style-type:none;        
+    }
+    li::before{
+        content:"-  ";      
+    }    
 }
 `

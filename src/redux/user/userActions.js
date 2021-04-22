@@ -129,7 +129,7 @@ export const registerUser = (userData, history) => {
                 if (err.response.data.error) {
                     dispatch(onRegisterUserError(err.response.data.error.details[0]["message"]));
                 } else {
-                    dispatch(onRegisterUserError(err.response.data));
+                    dispatch(onRegisterUserError(err.response.data.message));
                 }
             })
     }

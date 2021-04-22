@@ -8,65 +8,9 @@
         "reply": "I did not understand. Try Again!"
     },
     {
-        "action": "jeans",
-        "reply": "We have Compound cargo pants - long - The ultimate do-everything pants,Custodian pants - long - The graveyard shift has its advantages: quitting time = dawn patrol,Duck pants - long - Essential wear for splitting log."
-    },
-    {
         "action": "showtopcategories",
-        "reply": "We have new jeans, caps, bikes, jerseys,helmets,lights,headsets,smartphones,notebooks,clocks,shirts,socks,gloves and shorts."
-    },
-    {
-        "action": "bike",
-        "reply": "Right now, we only have Mountain bike."
-    },
-    {
-        "action": "jerseys",
-        "reply": "We have Barcelona, Real Madrid, Liverpool, Manchester United, Bayern Munich Jerseys."
-    },
-    {
-        "action": "caps",
-        "reply": "We have Cap 1 bottoms - Spring skiing is as transient as the wind. Move fast, move light, and still stay dry, Cap 1 boxer briefs - On bivy or belay, the form-fitting."
-    },
-    {
-        "action": "helmets",
-        "reply": "We have LS2, Edge, Studds, Zeus, Steelbird and MT."
-    },
-    {
-        "action": "lights",
-        "reply": "We have Smith Victor, Flashpoint 2-Light SoftBox Kit-Stands and Carrying Case, Bescor LED 95DK2 LED Video Light Kit with Two LED Light Panels; Two Pieces Floor Stands and Two AC Adaptors and  Lowel EgoFluorescent 2 Light Kit."
-    },
-    {
-        "action": "headsets",
-        "reply": "We have Closed-Back Headphones, Open-Back Headphones, On-Ear Headphones, Bluetooth Headphones, Earbuds and Noise-Cancelling Headphones."
-    },
-    {
-        "action": "smartphones",
-        "reply": "We have samsung, xiaomi, apple, huawei, Nokia and Redmi."
-    },
-    {
-        "action": "notebook",
-        "reply": "We have hp, acer, asus, huawei and lenovo."
-    },
-    {
-        "action": "clocks",
-        "reply": "We have garmin, casio, tissot, kirkland and sokolov."
-    },
-    {
-        "action": "shirts",
-        "reply": "We have jordan and goodloot."
-    },
-    {
-        "action": "socks",
-        "reply": "We have yellow, black, blue, red, pink colored socks."
-    },
-    {
-        "action": "gloves",
-        "reply": "We have yellow, black, blue, red, pink colored gloves."
-    },
-    {
-        "action": "shorts",
-        "reply": "We have yellow, black, blue, red, pink colored shorts."
-    },
+        "reply": "We have new as well as old products and we will display those items that are the closest to you. You can type what you want and we will link it."
+    },    
     {
         "action": "Greeting",
         "reply": "Hi human, please tell me your GeniSys user"
@@ -89,11 +33,11 @@
     },
     {
         "action": "NameQuery",
-        "reply": "You can call me Geni"
+        "reply": "You can call me SamanBot"
     },
     {
         "action": "RealNameQuery",
-        "reply": "My name is GeniSys"
+        "reply": "My name is SamanBot"
     },
     {
         "action": "TimeQuery",

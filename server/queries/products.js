@@ -1,5 +1,5 @@
 const async = require("async");
-const { User, Address, Products, ProductImages, ProductDetails, OrderDetails, sequelize } = require("../models/index");
+const { User, Address, Products, ProductImages, ProductDetails, ProductReviews, OrderDetails, sequelize } = require("../models/index");
 
 
 const { Op } = require("sequelize");
@@ -79,6 +79,10 @@ const getSellerProducts = async (user_id) => {
             model: ProductDetails,
             as: "product_details",
             attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
+        }, {
+            model: ProductReviews,
+            as: "product_reviews",
+            attributes: [["id", "product_review_id"], "reviews", "product_id", "user_id"]
         }]
     });
     const payload = {
@@ -162,6 +166,43 @@ const getAllProducts = async (user_id) => {
                 model: ProductDetails,
                 as: "product_details",
                 attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
+            }, {
+                model: ProductReviews,
+                as: "product_reviews",
+                attributes: [["id", "product_review_id"], "reviews", "product_id", "user_id"]
+            }],
+
+        });
+        return AllProducts;
+    });
+
+    return response;
+}
+
+const getAllUsersProducts = async () => {
+    const response = await sequelize.transaction(async (t) => {
+        const AllProducts = await Products.findAll({            
+            attributes: [["id", "product_id"], "product_name", "is_used_product", "product_type", "product_price", "product_quantity", "product_sub_type", "seller_id"],
+            include: [{
+                model: User,
+                as: "user_detail",
+                include: [{
+                    model: Address,
+                    as: "address"
+                }]
+            },
+            {
+                model: ProductImages,
+                as: "product_images",
+                attributes: [["id", "image_id"], "image", "product_id"]
+            }, {
+                model: ProductDetails,
+                as: "product_details",
+                attributes: [["id", "product_detail_id"], "product_detail", "product_id"],
+            }, {
+                model: ProductReviews,
+                as: "product_reviews",
+                attributes: [["id", "product_review_id"], "reviews", "product_id", "user_id"]
             }],
 
         });
@@ -183,6 +224,16 @@ const updateSellerPaidDeliveredValues = async (values) => {
     return response;
 };
 
+const addProductReviews = async (values) => {
+    const response = await ProductReviews.create({
+        reviews: values.review,
+        user_id: values.user_id,
+        product_id: values.product_id
+    });
+
+    return response;
+};
+
 module.exports = {
     addSellerProducts,
     addSellerProductsImages,
@@ -192,5 +243,7 @@ module.exports = {
     deleteSellerProduct,
     updateSellerProduct,
     getAllProducts,
-    updateSellerPaidDeliveredValues
+    updateSellerPaidDeliveredValues,
+    addProductReviews,
+    getAllUsersProducts
 }

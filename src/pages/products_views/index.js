@@ -16,7 +16,7 @@ const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [productHeader, setProductHeader] = useState();
 
-    const user_id = useSelector(state => state.user.user?.user_id);
+    const user_id = useSelector(state => state.user?.user?.user_id);
     const gettingAllProductsError = useSelector(state => state.allProducts?.gettingAllProductsError);
     const allProducts = useSelector(state => state.allProducts?.allProducts);
 

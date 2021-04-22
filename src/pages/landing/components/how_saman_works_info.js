@@ -63,10 +63,10 @@ const HowSamanWorksDiv = () => {
 
                     </div>
                     <div>
-                        <p className="how-it-works-info-headers">Buy from your closest seller.</p>
+                        <p className="how-it-works-info-headers">Sell any product for free.</p>
                     </div>
                     <div>
-                        <p className="how-it-works-info-contents">Saman recommends you products from the sellers that are nearest to you for your faster delivery .</p>
+                        <p className="how-it-works-info-contents">Saman allows its users to sell any type of products from anywhere for free in just few clicks.</p>
                     </div>
 
                 </Col>
@@ -81,10 +81,11 @@ const HowSamanWorksDiv = () => {
                         />
                     </div>
                     <div>
-                        <p className="how-it-works-info-headers">Buy from your closest seller.</p>
+
+                        <p className="how-it-works-info-headers">Talk with your seller.</p>
                     </div>
                     <div>
-                        <p className="how-it-works-info-contents">Saman recommends you products from the sellers that are nearest to you for your faster delivery .</p>
+                        <p className="how-it-works-info-contents">Saman provides features that allows the users to talk to the sellers about the product details.</p>
                     </div>
 
                 </Col>

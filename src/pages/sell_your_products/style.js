@@ -5,7 +5,7 @@ const { TabPane } = Tabs;
 
 export const CustomTab = styled(Tabs)`
     padding:20px;
-    margin:50px 200px;
+    margin:150px 200px;
     background-color:#fcf6ed;
     border-radius:2rem;
     .ant-tabs-tab {

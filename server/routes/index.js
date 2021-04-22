@@ -40,6 +40,7 @@ router.post("/users/update-seller-paid-values", checkJWT, sellerProductsRoutes.u
 
 //All Products
 router.get("/products/get-all-products", checkJWT, getAllProductsRoutes.getAllProducts);
+router.get("/products/get-all-users-products", checkJWT, getAllProductsRoutes.getAllUsersProducts);
 
 //Admin Routes
 router.get("/admin/get-all-customer-details", getAllCustomerDetailsRoutes.getAllCustomerDetails);
@@ -52,6 +53,7 @@ router.get("/users/get-user-address", checkJWT, userDetailRoutes.getUserAddress)
 router.post("/users/update-profile", checkJWT, updateUserRoutes.updateUserProfile);
 router.post("/users/update-password", checkJWT, updateUserRoutes.updateUserPassword);
 router.get("/users/get-user-email", checkJWT, userDetailRoutes.getUserEmail);
+router.post("/users/add-product-review", checkJWT, userDetailRoutes.addReviews);
 
 //Message Routes
 router.get("/users/chat-messages", checkJWT, messageRoutes.getRoomMessages);

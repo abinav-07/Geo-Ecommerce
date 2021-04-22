@@ -5,6 +5,7 @@ export const ChatDiv = styled.div`
     width:calc(100%);
     max-width:800px;
     margin-top:2%;
+    margin-bottom:2%;
 `
 
 export const ChatBoxDiv = styled.div`

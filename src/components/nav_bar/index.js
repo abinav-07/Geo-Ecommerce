@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import SearchBar from './search_bar';
@@ -13,7 +13,7 @@ import { Fragment } from 'react';
 import { logoutUser } from '../../redux';
 import 'font-awesome/css/font-awesome.min.css';
 import logo from '../../assests/images/logo.png';
-import { get } from 'jquery';
+import $ from 'jquery';
 
 const Navbar = ({ displaySearchBar }) => {
     const history = useHistory();
@@ -24,6 +24,21 @@ const Navbar = ({ displaySearchBar }) => {
     const onLogout = () => {
         dispatch(logoutUser(history));
     }
+
+    //Display Nav Bar on Scroll
+    useEffect(() => {
+        var previousScrollPos = window.pageYOffset;
+        window.onscroll = function () {
+            var currentScrollPos = window.pageYOffset;
+            if (previousScrollPos > currentScrollPos) {
+                $("#navBarDiv").css({ top: "0" })
+            } else {
+                $("#navBarDiv").css({ top: "-100px" })
+            }
+            previousScrollPos = currentScrollPos;
+        };
+    });
+
 
     const DropDownMenu = (props) => {
         return (
@@ -137,7 +152,7 @@ const Navbar = ({ displaySearchBar }) => {
                 >
                     <Row style={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
                         <Col>
-                            <h2>Saman.com</h2>
+                            <h2><b>Saman.com</b></h2>
                             {/* <Image
                                 width={100}
                                 src={logo}

@@ -183,7 +183,7 @@ const ChatPage = () => {
         <div
             style={{
                 display: "flex",
-                justifyContent: "center"
+                justifyContent: "center",
             }}
         >
             <ChatDiv>

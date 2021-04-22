@@ -1,4 +1,5 @@
 const Users = require("../../queries/user");
+const Products = require("../../queries/products");
 
 const getUserAddress = async (req, res) => {
     if (req.query.user_id) {
@@ -47,8 +48,19 @@ const getUserEmail = async (req, res) => {
     }
 };
 
+const addReviews = async (req, res) => {    
+    const { review, user_id, product_id } = req.body;
+    if (review && user_id && product_id) {
+        const response = await Products.addProductReviews(req.body);
+        res.status(200).send("Review Added!");
+    } else {
+        res.status(400).json({ message: "Body Params Missing!" })
+    }
+}
+
 module.exports = {
     getUserDetail,
     getUserAddress,
-    getUserEmail
+    getUserEmail,
+    addReviews
 }

@@ -1,20 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Layout, Image } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { WelcomeDiv, PCBackgroundImg, RightBackGround, LandingRightColumn } from './style';
 import pcBackgroundImg from '../../assests/images/pcBackgroundImg.jpg';
-import logo from '../../assests/images/logo.png';
 import $ from 'jquery';
-import { DownCircleFilled } from '@ant-design/icons';
+import { getAllProducts } from '../../redux';
 import ReactRotatingText from 'react-rotating-text';
-
 import HowSamanWorksDiv from './components/how_saman_works_info';
 import BuySellInformation from './components/buy_sell_info';
 import ChatBot from './components/chat_bot/chat-bot';
+import PCBackgroundProductType from '../../assests/images/landing_product_type.PNG';
+import PCBackgroundSellForFree from '../../assests/images/landing_sell_free.PNG';
+import PCBackgroundSellProduct from '../../assests/images/landing_sell_products.PNG';
 
 const LandingPage = () => {
 
+    const dispatch = useDispatch();
+
     const [animationColor, setAnimationColor] = useState("yellow");
+    const [pcBackgroundImg, setPCBackgroundImg] = useState(PCBackgroundProductType);
+
+    const user_id = useSelector(state => state.user?.user?.user_id);
+
+    useEffect(() => {
+        dispatch(getAllProducts(user_id));
+    }, [user_id]);
 
     //Animation Div Ref
     const landingRightColumnElement = useRef(null);
@@ -22,7 +33,7 @@ const LandingPage = () => {
     const totalDegreesToRotateLandingBuySellDiv = 40;
 
     const animationColors = ["#dec852", "#587abf", "#36a87b", "#e0994c"];
-    const textToRender = ["buy new and old products.", "sell your own products.", "sell products for free."]
+    const textToRender = ["buy new and old products.", "sell your own products for free.", "chat with the sellers."]
 
     useEffect(() => {
         const handleScroll = (event) => {
@@ -65,21 +76,33 @@ const LandingPage = () => {
 
     //Color Animation     
     useEffect(() => {
-        const animationInterval = setInterval(animateColor, 4000);
+        const animationInterval = setInterval(animateColor, 5500);
         return () => clearInterval(animationInterval);
     }, []);
 
+    //Variables for animation loop
     let colorIndex = 0;
+    let pcBackgroundImages = [PCBackgroundProductType, PCBackgroundSellProduct, PCBackgroundSellForFree];
+    let pcBackgroundImagesIndex = 1;//Index to match text and image
 
     const animateColor = () => {
         for (var i = 0; i < animationColors.length; i++) {
             if (i == colorIndex) setAnimationColor(animationColors[colorIndex]);
         }
 
+        for (var i = 0; i < pcBackgroundImages.length; i++) {
+
+            if (i == pcBackgroundImagesIndex) setPCBackgroundImg(pcBackgroundImages[pcBackgroundImagesIndex]);
+        }
         colorIndex++;
+        pcBackgroundImagesIndex++;
 
         if (colorIndex > animationColors.length - 1) {
             colorIndex = 0;
+        }
+
+        if (pcBackgroundImagesIndex > pcBackgroundImages.length - 1) {
+            pcBackgroundImagesIndex = 0;
         }
     };
 
@@ -146,6 +169,8 @@ const LandingPage = () => {
                                 <RightBackGround id="landingRightBackgroundDiv" animatedbackgroundColor={animationColor}>
                                 </RightBackGround>
                                 <PCBackgroundImg
+                                    id="pc-background-img"
+                                    preview={false}
                                     src={pcBackgroundImg}
                                 >
                                 </PCBackgroundImg>

@@ -230,6 +230,7 @@ const registerOrder = async (values) => {
                 }
             });
 
+            //Raw Query
             await sequelize.query(`UPDATE users SET total_expenditure=total_expenditure+${values.product_price} where user_id=${values.user_id}`);
 
             return "Order Registered";

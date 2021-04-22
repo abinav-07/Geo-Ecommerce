@@ -56,7 +56,7 @@ const updateUserPassword = async (req, res) => {
             if (userResponse) {
                 //Checking for password, if from google, no password required
                 if (userResponse.password) {
-                    if (userResponse && (userResponse.password && !bcrypt.compareSync(req.body.oldPassword, userResponse.password))) res.status(401).json({ message: "Password did not match!" });
+                    if (userResponse && (userResponse.password && !bcrypt.compareSync(req.body.oldPassword, userResponse.password))) res.status(401).json({ message: "Old Password did not match!" });
                     if (userResponse && bcrypt.compareSync(req.body.oldPassword, userResponse.password)) {
 
                         const updateUserPasswordResponse = Users.updateUserPassword(req.body);

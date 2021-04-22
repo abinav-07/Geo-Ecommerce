@@ -1,7 +1,7 @@
 import { Row, Col, Image, Button, notification } from 'antd';
 import { filter } from 'async';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { OrderProductDiv } from './style.js';
 import PaymentModal from './payment_modal';
 import axios from 'axios';
@@ -10,15 +10,27 @@ import { timeConverter, AVERAGE_BIKE_SPEED, getLatLongDistance } from '../../../
 
 
 const OrderProduct = ({ userId, productId, sellerId }) => {
+
     const [openModalBool, setOpenModalBool] = useState(false);
     const [currentWeather, setCurrentWeather] = useState(null);
     const [currentWeatherIcon, setCurrentWeatherIcon] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState();
+    const [allProducts, setAllProducts] = useState();
 
     const current_user_id = useSelector(state => state?.user?.user?.user_id);
-    const allProducts = useSelector(state => state.allProducts?.allProducts);
     const user_latitude = useSelector(state => state?.user?.user?.latitude ? parseFloat(state?.user?.user?.latitude) : "");
     const user_longitude = useSelector(state => state?.user?.user?.longitude ? parseFloat(state?.user?.user?.longitude) : "");
+
+
+    useEffect(() => {
+        axios.get(`${API_URL}/products/get-all-users-products`).
+            then(res => {
+                setAllProducts(res.data);
+            }).catch(err => {
+                console.log(err.response);
+            })
+    }, []);
+
 
     useEffect(() => {
         const filteredProduct = allProducts?.filter(item => item.product_id == productId);
@@ -43,7 +55,7 @@ const OrderProduct = ({ userId, productId, sellerId }) => {
 
         }
 
-        setSelectedProduct(filteredProduct[0]);
+        setSelectedProduct(filteredProduct?.[0]);
 
     }, [productId, allProducts]);
 

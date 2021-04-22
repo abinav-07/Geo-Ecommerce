@@ -19,14 +19,16 @@ export const OrderProductDiv = styled.div`
     }
     h4{
         font-weight:600;
-    } 
+    }     
+    
 `;
 
-export const PaymentModalModal = styled(Modal)`
-  
+export const PaymentModalModal = styled(Modal)`        
+        
+    
 `;
 
-export const PaymentTypeDiv=styled.div`
+export const PaymentTypeDiv = styled.div`
     border:1px solid grey; 
     margin:2px;
     width:400px;

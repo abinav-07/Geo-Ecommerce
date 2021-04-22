@@ -102,7 +102,7 @@ const MainProductsLayout = ({ allProducts, productHeader }) => {
                         pageSize: 10,
                     }}
                     renderItem={(item, i) => {
-
+                        console.log(item);
                         return (
                             <ListItemDiv>
                                 <CardDiv
@@ -117,7 +117,7 @@ const MainProductsLayout = ({ allProducts, productHeader }) => {
                                 >
                                     <div className="card-contents">
                                         <div>
-                                            <h2>{item?.product_name}</h2>
+                                            <h2>{item?.product_name} <span style={{color:"black",fontWeight:"200",fontSize:"0.8rem"}}>({item?.is_used_product ? "Used" : "New"})</span></h2>
                                         </div>
                                         <div>
                                             <p className="product-delivery-time">Estimated Delivery Time: {item?.time_for_delivery_in_hours}</p>

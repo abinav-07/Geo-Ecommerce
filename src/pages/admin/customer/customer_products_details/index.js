@@ -4,13 +4,15 @@ import { useHistory } from 'react-router-dom';
 import { Table, Button, Image, Modal, Input, message, notification } from 'antd';
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 import { CustomerProductsDiv } from './style';
-import { deleteSellerProduct, onDeleteSellerProductReset } from '../../../../redux';
+import { getAllCustomerDetails, deleteSellerProduct, onDeleteSellerProductReset } from '../../../../redux';
 import $ from 'jquery';
 import { Table as ExtendedTable } from "ant-table-extensions";
+import { ADMIN_NAV_BAR_KEYS } from '../../../../enums';
 
 const AdminCustomerProductDetails = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const deletingSellerProductBool = useSelector(state => state.addSellerProducts?.deletingSellerProduct);
     const deletingSellerProductSuccess = useSelector(state => state.addSellerProducts?.deletingSellerProductSuccess);
     const deletingSellerProductError = useSelector(state => state.addSellerProducts?.deletingSellerProductError);
     const user_name = history.location.state?.user_details?.name || null;
@@ -18,6 +20,7 @@ const AdminCustomerProductDetails = () => {
     const user_products = history.location.state?.user_details?.products;
 
     const [products, setProducts] = useState([]);
+    const [filteredData, setFilteredData] = useState();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteModalInput, setDeleteModalInput] = useState("");
     const [productIdToDelete, setProductIdToDelete] = useState(null);
@@ -26,6 +29,16 @@ const AdminCustomerProductDetails = () => {
     useEffect(() => {
         dispatch(onDeleteSellerProductReset());
     });
+
+    useEffect(() => {
+        if (filteredData) {
+            history.push({
+                pathname: `/admin/${ADMIN_NAV_BAR_KEYS.CUSTOMER_DETAILS}/product-details`,
+                state: { user_details: filteredData }
+            });
+        }
+    }, [deletingSellerProductSuccess]);
+
 
     useEffect(() => {
         if (!history.location.state) {
@@ -74,6 +87,9 @@ const AdminCustomerProductDetails = () => {
         if (deleteModalInput === "DELETE") {
             dispatch(deleteSellerProduct(value));
             let filteredProducts = products?.filter(data => data.product_id !== value.product_id);
+            const new_user_details = history.location.state?.user_details;
+            new_user_details.products = filteredProducts;
+            setFilteredData(new_user_details);
             setProducts([...filteredProducts]);
             setProductIdToDelete(null);
             setProductNameToDelete(null);

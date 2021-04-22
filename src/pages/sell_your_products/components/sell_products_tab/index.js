@@ -96,8 +96,8 @@ const SellProductsTab = () => {
                     form={form}
                     id="sellProductsForm"
                     labelCol={{
-                        md: { span: 9 },
-                        xs: { span: 9 }
+                        md: { span: 12 },
+                        xs: { span: 12}
                     }}
                     wrapperCol={{
                         md: { span: 14 },
@@ -112,7 +112,7 @@ const SellProductsTab = () => {
                     <h1>Product Informations</h1>
 
 
-                    <Row gutter={24}>
+                    <Row>
                         <Col
                             md={12}
                             xs={24}

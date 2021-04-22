@@ -10,7 +10,7 @@ const ChatBot = () => {
     const [displayChatBot, setDisplayChatBot] = useState(false);
     const [text, setText] = useState("");
     const [chatMessages, setChatMessages] = useState([{
-        "message": "Hi, How can i help you",
+        "message": "Hi, How can i help you?",
         "class": "left"
     }])
 

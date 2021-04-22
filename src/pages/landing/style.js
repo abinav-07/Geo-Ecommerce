@@ -34,6 +34,10 @@ export const PCBackgroundImg = styled(Image)`
     margin-top:70%;
     margin-left:-40%;
     transform:scale(1.3);
+    border:1.7rem solid black;
+    border-radius:5%;
+    width:850px;
+    height:500px;
 `
 
 export const RightBackGround = styled.div`
@@ -128,7 +132,7 @@ export const ChatDiv = styled.div`
     right:6rem;
     height:100%;
     width:100%;
-    max-height:550px;
+    max-height:500px;
     max-width:450px;
     border:1px solid grey;    
     .input-text-field{       
@@ -146,7 +150,7 @@ export const ChatDiv = styled.div`
         list-style: none;
         padding: 20px 10px 0 10px;
         margin: 0;
-        height: 430px;
+        height: 380px;
         overflow-y: scroll;
         background-color: white;
     }

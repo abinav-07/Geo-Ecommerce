@@ -13,6 +13,12 @@ const getAllProducts = async (req, res) => {
     }
 }
 
+const getAllUsersProducts = async (req, res) => {
+    const getAllUsersProductsData = await Products.getAllUsersProducts();
+    res.status(200).json(getAllUsersProductsData);
+}
+
 module.exports = {
-    getAllProducts
+    getAllProducts,
+    getAllUsersProducts
 }
